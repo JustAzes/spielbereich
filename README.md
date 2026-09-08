@@ -1,29 +1,28 @@
-# Spielbereich – Entwürfe
+# Spielbereich – Entwurf
 
-Statische Entwurfsseiten, ohne Generator und ohne Framework. Alle Pfade
-sind relativ, die Seiten laufen im Unterverzeichnis einer
+Eine statische Entwurfsseite, ohne Generator und ohne Framework. Alle
+Pfade sind relativ, die Seite läuft im Unterverzeichnis einer
 GitHub-Projektseite genauso wie unter einer eigenen Domain.
 
-| Seite | Inhalt |
-| --- | --- |
-| [`/`](https://justazes.github.io/spielbereich/) | **carus.one** – Ankündigungsseite für das geplante Daten- und KI-Ökosystem des Universitätsklinikums Dresden |
-| [`/brueckner/`](https://justazes.github.io/spielbereich/brueckner/) | **Brückner Haustechnik & Ausbau** – Aufbau-Animation des Logos |
+Hier liegt **carus.one** – die Ankündigungsseite für das geplante Daten-
+und KI-Ökosystem des Universitätsklinikums Dresden:
+[`https://justazes.github.io/spielbereich/`](https://justazes.github.io/spielbereich/)
 
-Beide Seiten tragen `noindex, nofollow` und sind interne Entwürfe.
+Die Seite trägt `noindex, nofollow` und ist ein interner Entwurf. Die
+Logo-Animation für Brückner Haustechnik & Ausbau lag früher unter
+`/brueckner/` und steht jetzt im Repo
+[Basteleien](https://github.com/JustAzes/Basteleien).
 
 ## Aufbau
 
 ```
-index.html              carus.one, alle Texte als echtes HTML
-brueckner/index.html    Logo-Animation, SVG eingebettet
-css/teaser.css          carus.one: Einstiegsanimation
-css/page.css            carus.one: Gestaltungssystem des Inhalts
-css/brueckner.css       Brückner: der komplette Aufbau der Animation
-js/teaser.js            carus.one: WebGL-2-Szene
-js/page.js              carus.one: Einblenden, Navigationsleiste
-js/brueckner.js         Brückner: Start und Neustart
+index.html              alle Texte als echtes HTML
+css/teaser.css          die Einstiegsanimation
+css/page.css            das Gestaltungssystem des Inhalts
+js/teaser.js            die WebGL-2-Szene
+js/page.js              Einblenden, Navigationsleiste
 img/                    Symbol, Linkvorschau, synthetische Thoraxaufnahme
-tools/                  die Erzeuger von Bildern und Logo-SVG
+tools/                  die Erzeuger der Bilder
 .nojekyll               GitHub Pages liefert die Dateien unverändert aus
 ```
 
@@ -31,8 +30,7 @@ tools/                  die Erzeuger von Bildern und Logo-SVG
 
 ```sh
 python3 -m http.server 8000
-# http://127.0.0.1:8000/            carus.one
-# http://127.0.0.1:8000/brueckner/  Logo-Animation
+# http://127.0.0.1:8000/
 ```
 
 ## Als GitHub Page veröffentlichen
@@ -51,24 +49,16 @@ nicht nötig.
 ```sh
 pip install numpy pillow
 
-# carus.one: synthetische Thoraxaufnahme, Symbol und Linkvorschau
+# synthetische Thoraxaufnahme, Symbol und Linkvorschau
 python3 tools/carus-xray.py
 python3 tools/carus-brand.py
-
-# Brückner: Logo-SVG erzeugen und in die Seite einsetzen
-python3 tools/brueckner-logo.py   # schreibt tools/brueckner-logo.snippet.html
-python3 tools/embed-logo.py       # ersetzt den Bereich zwischen den logo-Marken
 ```
-
-Das Logo muss eingebettet bleiben – nur eingebettetes SVG lässt sich per
-CSS animieren. `tools/brueckner-logo.json` enthält die vermessene
-Geometrie; `tools/brueckner-logo.py` erzeugt daraus das SVG.
 
 ## Beim Umzug auf eine andere Adresse anpassen
 
 * `og:url` und `og:image` in `index.html` (absolute Adressen, weil die
   meisten Dienste relative Vorschaubilder nicht auswerten)
-* `<meta name="robots" content="noindex, nofollow">` entfernen, wenn eine
+* `<meta name="robots" content="noindex, nofollow">` entfernen, wenn die
   Seite gefunden werden soll
 * eine kanonische Adresse (`<link rel="canonical">`) setzen
 * Impressum, Datenschutzerklärung und einen Verantwortlichen ergänzen –
@@ -77,14 +67,10 @@ Geometrie; `tools/brueckner-logo.py` erzeugt daraus das SVG.
 
 ## Geprüft
 
-**carus.one:** axe-core ohne Verstöße bei 1280 und 390 Pixel, Kontraste
-über den Anforderungen von WCAG 2.2 AA, keine waagerechten Überläufe bei
+axe-core ohne Verstöße bei 1280 und 390 Pixel, Kontraste über den
+Anforderungen von WCAG 2.2 AA, keine waagerechten Überläufe bei
 1440 / 768 / 390 / 320 Pixel, Textvergrößerung bis 200 Prozent,
 vollständige Tastaturbedienung, lesbar ohne JavaScript und ohne WebGL 2.
 Die sechs Datenpunkte der Einstiegsanimation wurden einzeln angesprungen
 und ausgemessen: bei 280 / 320 / 360 / 390 / 768 / 1024 / 1440 / 1920
 Pixel steht jede Zeile vollständig im Bild.
-
-**Brückner:** axe-core ohne Verstöße, Aufbau in sechs Zeitschnitten
-kontrolliert, Neustart-Taste, kein Überlauf bei 390 und 320 Pixel,
-ruhiges Endbild bei reduzierter Bewegung.
