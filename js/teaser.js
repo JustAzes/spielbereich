@@ -1543,6 +1543,46 @@
     root.classList.add('is-fallback', 'is-final');
   });
 
+  /* ================================================================== *
+   * Vortragsmodus
+   *
+   * Nur wenn der Abschnitt data-c1-present traegt, legt der Teaser eine
+   * Steuerung an - und zwar am Element, nicht am Fenster: die normale
+   * Seite soll keine globale Schnittstelle mitbringen. Die Tasten dazu
+   * liegen in js/present.js, Pause und Neustart bleiben Sache der
+   * vorhandenen Schaltflaechen.
+   * ================================================================== */
+
+  if (root.hasAttribute('data-c1-present')) {
+    root.c1 = {
+      /* Die Kapitel sind die Szenen der Geschichte, kein zweiter Fahrplan:
+         sie lesen ihre Marken aus SC. */
+      chapters: [
+        { p: 0, name: 'Auftakt' },
+        { p: SC.data[0], name: 'Klinische Daten' },
+        { p: SC.art[0], name: 'Arztbrief, Monitor, Bildgebung' },
+        { p: SC.patient[0], name: 'Patient View' },
+        { p: SC.pop[0], name: 'Population' },
+        { p: SC.orbit[0], name: 'carus.one' },
+        { p: SC.cap[0], name: 'Capabilities' },
+        { p: SC.ai[0], name: 'Clinical AI' },
+        { p: SLOGAN_A[0] - 0.006, name: 'Finale' }
+      ],
+      seconds: STORY_SECONDS,
+      progress: function () { return st.p; },
+      /* Springt zu einem Punkt der Geschichte und laeuft von dort weiter.
+         Haelt die Szene gerade an, wird ein einzelnes Bild gerechnet -
+         sonst bliebe das alte stehen. */
+      seek: function (v) {
+        st.p = Math.max(0, Math.min(1, Number(v) || 0));
+        st.autoplay = !reduceMotion && st.p < 1;
+        st.wasFinal = st.p > 0.955;
+        root.classList.toggle('is-final', st.wasFinal);
+        if (!running) { window.requestAnimationFrame(function (t) { frame(t); }); }
+      }
+    };
+  }
+
   root.classList.add('is-live');
   /* Wird die Seite mit einem Anker oder bereits gescrollt geoeffnet, ist
      die Sequenz nicht der Einstieg: sie steht dann fertig da und gibt

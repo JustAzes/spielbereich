@@ -1,0 +1,385 @@
+/* ==================================================================== *
+ * carus.one - Vortragsseite (praesentation/index.html)
+ *
+ * Folien im Fenster, eine nach der anderen. Ohne JavaScript stehen alle
+ * Folien untereinander - dann ist es eine lange Seite und kein Vortrag,
+ * aber vollstaendig lesbar. Erst js/deck.js setzt .deck--js und schaltet
+ * auf eine Folie zur Zeit um.
+ *
+ * Farben und Abstaende folgen dem Gestaltungssystem der Hauptseite
+ * (css/page.css), nur groesser: gelesen wird das hier aus zehn Metern.
+ * ==================================================================== */
+
+:root {
+  --v-bg: #05070b;
+  --v-fg: #f4f7fb;
+  --v-body: #ccd6e4;
+  --v-mute: #9fb0c4;
+  --v-accent: #8ab4e8;
+  --v-line: rgba(214, 226, 245, 0.16);
+  --v-max: 68rem;
+  --v-pad: clamp(1.4rem, 5vw, 4.5rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: auto; }
+
+body {
+  margin: 0;
+  background-color: var(--v-bg);
+  color: var(--v-body);
+  font: 400 clamp(1rem, 1.35vw, 1.35rem)/1.6 -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Eine Folie zur Zeit: erst mit JavaScript. */
+.deck--js { height: 100%; overflow: hidden; }
+.deck--js body { height: 100%; overflow: hidden; }
+
+/* --- Die Folie ------------------------------------------------------ */
+
+.sl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: clamp(3.5rem, 9vh, 6rem) var(--v-pad) clamp(4rem, 10vh, 6rem);
+  border-top: 1px solid var(--v-line);
+}
+
+.sl:first-of-type { border-top: 0; }
+
+/* Die Animation traegt ihre eigene Hoehe und Fusszeile. */
+.sl--teaser {
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+/* Die ruhenden Folien werden ausgeblendet, nicht nur durchsichtig
+   gemacht: nur so meldet der Beobachter in js/teaser.js die Animation als
+   ausserhalb des Bildes und hoert auf zu rechnen. */
+.deck--js .sl {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  height: 100%;
+  border-top: 0;
+  display: none;
+}
+
+.deck--js .sl.is-on {
+  display: flex;
+  overflow-y: auto;
+  animation: sl-in 0.34s ease both;
+}
+
+.deck--js .sl--teaser.is-on { display: block; }
+
+@keyframes sl-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* margin:auto statt align-items - so bleibt der Inhalt mittig, wird aber
+   bei 200 Prozent Textgroesse oben nicht abgeschnitten, sondern die Folie
+   rollt (Pfeil auf/ab; die Pfeile nach links und rechts bleiben dem
+   Folienwechsel). */
+.sl__inner {
+  width: 100%;
+  max-width: var(--v-max);
+  margin: auto;
+}
+
+.sl__kicker {
+  margin: 0 0 0.8rem;
+  color: var(--v-accent);
+  font-size: 0.8em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sl__h {
+  margin: 0 0 0.7rem;
+  color: var(--v-fg);
+  font-size: clamp(1.9rem, 4.4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.sl__lead {
+  margin: 0;
+  max-width: 46em;
+  font-size: 1.12em;
+  color: var(--v-body);
+}
+
+.sl__note {
+  margin: 2rem 0 0;
+  color: var(--v-mute);
+  font-size: 0.9em;
+}
+
+/* --- Bausteine innerhalb der Folien --------------------------------- */
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: clamp(1.1rem, 2.4vw, 2rem);
+  margin: clamp(1.8rem, 4vh, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cols h3 {
+  margin: 0 0 0.35rem;
+  color: var(--v-fg);
+  font-size: 1.05em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.cols p {
+  margin: 0;
+  color: var(--v-mute);
+  font-size: 0.94em;
+}
+
+.cols > li {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--v-line);
+}
+
+/* Das Fundament: drei Ebenen, die aufeinander liegen. */
+.stack {
+  margin: clamp(1.8rem, 4vh, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.stack > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  padding: clamp(0.9rem, 2vh, 1.3rem) clamp(1rem, 2.4vw, 1.8rem);
+  border: 1px solid var(--v-line);
+  border-radius: 0.4rem;
+  background-color: rgba(138, 180, 232, 0.04);
+}
+
+.stack b {
+  color: var(--v-fg);
+  font-size: 1.08em;
+  font-weight: 500;
+}
+
+.stack span { color: var(--v-mute); font-size: 0.94em; }
+
+/* Der Lebenszyklus: fuenf Phasen als Reihe mit Nummern. */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.8rem);
+  margin: clamp(1.8rem, 4vh, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: phase;
+}
+
+.flow > li {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--v-line);
+}
+
+.flow__n {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--v-accent);
+  font-size: 0.82em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.flow h3 {
+  margin: 0 0 0.35rem;
+  color: var(--v-fg);
+  font-size: 1.02em;
+  font-weight: 500;
+}
+
+.flow p { margin: 0; color: var(--v-mute); font-size: 0.9em; }
+
+/* Abschlussfolie */
+.sl--end .sl__inner { text-align: center; }
+
+.sl--end .word {
+  margin: 0 0 1rem;
+  color: var(--v-fg);
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.sl--end .word b { font-weight: 400; }
+
+.sl--end .claim {
+  margin: 0 0 2.2rem;
+  color: var(--v-body);
+  font-size: clamp(1.05rem, 2vw, 1.6rem);
+  font-weight: 300;
+}
+
+.sl--end .meta {
+  margin: 0;
+  color: var(--v-mute);
+  font-size: 0.9em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --- Bedienung ------------------------------------------------------ */
+
+.deck-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  /* Viel Luft nach oben: dort darf der Verlauf ausklingen, ohne die
+     Schrift zu erreichen. Auf der Titelfolie liegt die Leiste ueber der
+     Animation, und unter ihr koennen jederzeit helle Partikel stehen -
+     ueber der Schrift ist der Verlauf deshalb fast deckend. */
+  padding: 1.5rem clamp(0.9rem, 3vw, 2rem) 0.55rem;
+  color: var(--v-mute);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  background: linear-gradient(to top, rgba(5, 7, 11, 0.97), rgba(5, 7, 11, 0.95) 58%, rgba(5, 7, 11, 0));
+}
+
+/* Auf der Titelfolie steht die Fusszeile der Animation genau dort, wo
+   sonst die Leiste liegt. Sie wandert nach oben, damit sich nichts
+   ueberlagert; die beiden Verlaeufe ergeben zusammen ein ruhiges Band. */
+.deck--js .sl--teaser .c1-foot { bottom: 2.6rem; }
+
+.deck-bar__keys { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+
+.deck-bar b { color: var(--v-fg); font-weight: 500; }
+
+.deck-bar__no { color: var(--v-fg); font-variant-numeric: tabular-nums; }
+
+/* Ohne JavaScript gibt es keine Folienschaltung, also auch keine Leiste. */
+.deck-bar { display: none; }
+.deck--js .deck-bar { display: flex; }
+
+.deck-bar.is-off { opacity: 0; transition: opacity 0.6s ease; }
+.deck-bar { transition: opacity 0.3s ease; }
+
+/* Fortschritt ueber die Folien */
+.deck-rail {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  height: 2px;
+  background-color: rgba(226, 236, 252, 0.08);
+  display: none;
+}
+
+.deck--js .deck-rail { display: block; }
+
+.deck-rail i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background-color: var(--v-accent);
+  transition: width 0.3s ease;
+}
+
+/* Klickflaechen links und rechts - beim Vortrag klickt man, statt zu
+   zielen. Sie liegen unter der Animation, damit deren Tasten oben
+   bleiben, und ruhen auf der Titelfolie. */
+.deck-tap {
+  position: fixed;
+  top: 0;
+  bottom: 2.6rem;
+  width: 22%;
+  z-index: 10;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: none;
+}
+
+.deck--js .deck-tap { display: block; }
+
+.deck-tap--prev { left: 0; }
+.deck-tap--next { right: 0; }
+
+.deck-tap:focus-visible {
+  outline: 2px solid var(--v-accent);
+  outline-offset: -6px;
+}
+
+/* Beim Folienwechsel wird die Ueberschrift angesprungen, damit
+   Screenreader mitkommen. Sie ist nicht mit der Tabulatortaste
+   erreichbar, deshalb braucht sie auch keinen sichtbaren Rahmen - der
+   sah aus wie ein Kasten um den Titel. */
+.sl__h:focus,
+.word:focus,
+[tabindex="-1"]:focus { outline: none; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+a { color: var(--v-fg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck--js .sl.is-on { animation: none; }
+  .deck-bar,
+  .deck-bar.is-off,
+  .deck-rail i { transition: none; }
+}
+
+/* Aus dem Browser heraus als PDF: eine Folie je Seite. */
+@media print {
+  .deck--js, .deck--js body { height: auto; overflow: visible; }
+  .deck--js .sl {
+    position: static;
+    display: flex;
+    animation: none;
+    height: auto;
+    min-height: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+  .deck-bar, .deck-rail, .deck-tap, .sl--teaser { display: none !important; }
+  body { background: #fff; color: #111; }
+  .sl__h, .cols h3, .flow h3, .stack b, .sl--end .word { color: #000; }
+  .sl__lead, .cols p, .flow p, .stack span, .sl__note { color: #333; }
+}

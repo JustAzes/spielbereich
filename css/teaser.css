@@ -722,8 +722,8 @@ body {
      nicht erst im Finale. Der Verlauf sichert den Kontrast auch dort,
      wo gerade helle Partikel liegen. */
   opacity: 1;
-  background-image: linear-gradient(to top, rgba(5, 7, 11, 0.94), rgba(5, 7, 11, 0.6) 55%, rgba(5, 7, 11, 0));
-  padding-top: 2.2rem;
+  background-image: linear-gradient(to top, rgba(5, 7, 11, 0.97), rgba(5, 7, 11, 0.92) 60%, rgba(5, 7, 11, 0));
+  padding-top: 2.6rem;
 }
 
 .c1-foot__org {

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+  carus.one - Rueckfallseite fuer den Vortrag.
+
+  Hier liegt die Sequenz als Film. Gedacht fuer den Fall, dass die
+  Animation nicht laufen kann: fremder Rechner, alter Browser, kein
+  WebGL 2, kein Netz. Der Film ist Bild fuer Bild aus derselben Seite
+  abgenommen (siehe README, Abschnitt "Film neu abnehmen"), er zeigt also
+  genau dieselbe Sequenz.
+
+  Die Seite braucht selbst kein JavaScript.
+-->
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>carus.one &ndash; Sequenz als Film</title>
+  <meta name="description" content="Die Einstiegssequenz von carus.one als MP4 zum Ansehen und Herunterladen – der Rückfall für Vorträge ohne WebGL.">
+  <meta name="theme-color" content="#05070b">
+  <link rel="icon" href="../img/carus-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../img/carus-icon-180.png">
+  <link rel="stylesheet" href="../css/backup.css">
+</head>
+
+<body>
+  <main class="bu">
+    <p class="bu__kicker">R&uuml;ckfall f&uuml;r den Vortrag</p>
+    <h1>Die Sequenz als Film</h1>
+    <p class="bu__lead">Dieselbe Einstiegssequenz wie auf der
+      Ankündigungsseite, nur als Datei: Bild f&uuml;r Bild aus der Seite
+      abgenommen, in gleichm&auml;ssigem Lauf. F&uuml;r den Fall, dass die
+      Animation nicht laufen kann &ndash; fremder Rechner, alter Browser,
+      kein Netz.</p>
+
+    <div class="bu__film">
+      <video controls preload="metadata"
+             poster="../img/carus-teaser-poster.jpg"
+             width="1920" height="1080">
+        <source src="carus-one-teaser-1080p.mp4" type="video/mp4">
+        <p>Dieser Browser kann den Film nicht abspielen.
+          <a href="carus-one-teaser-1080p.mp4">Film herunterladen</a>.</p>
+      </video>
+    </div>
+
+    <p class="bu__actions">
+      <a class="bu__dl" href="carus-one-teaser-1080p.mp4" download>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M12 3v12"></path><path d="M7 11l5 5 5-5"></path><path d="M4 21h16"></path>
+        </svg>
+        Film herunterladen
+      </a>
+      <span class="bu__size">MP4 &middot; 1920 &times; 1080 &middot; 40 Sekunden &middot; ohne Ton &middot; etwa 33 MB</span>
+    </p>
+
+    <div class="bu__grid">
+      <section>
+        <h2>In eine Folie einbauen</h2>
+        <ol>
+          <li>Film herunterladen.</li>
+          <li>In PowerPoint: <em>Einf&uuml;gen &rarr; Video &rarr; Video auf
+            meinem Ger&auml;t</em> (Keynote: <em>Medien &rarr; Film</em>).</li>
+          <li>Beim Start abspielen und &bdquo;Bildschirm f&uuml;llen&ldquo;
+            einstellen; der Film hat keinen Ton.</li>
+          <li>Der Film liegt dann <em>in</em> der Datei &ndash; er braucht
+            weder Netz noch diese Seite.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Wenn es doch live sein soll</h2>
+        <ul>
+          <li><a href="../teaser/">Sequenz im Vollbild</a> &ndash; nur die
+            Animation, mit Tastensteuerung.</li>
+          <li><a href="../praesentation/">Vortragsseite</a> &ndash; die
+            Sequenz als Auftakt und danach die Folien.</li>
+          <li><a href="../">Ank&uuml;ndigungsseite</a> &ndash; die
+            vollst&auml;ndige Seite zum Lesen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Angaben zur Datei</h2>
+        <dl class="bu__facts">
+          <dt>Format</dt><dd>MP4, H.264</dd>
+          <dt>Gr&ouml;sse im Bild</dt><dd>1920 &times; 1080</dd>
+          <dt>Bilder je Sekunde</dt><dd>20</dd>
+          <dt>L&auml;nge</dt><dd>40 Sekunden</dd>
+          <dt>Ton</dt><dd>keiner</dd>
+          <dt>Datei</dt><dd>etwa 33 MB</dd>
+        </dl>
+      </section>
+    </div>
+
+    <footer>
+      <p>Alle klinischen Werte in der Sequenz sind synthetische
+        Beispieldaten; die Thoraxaufnahme ist rein rechnerisch erzeugt und
+        zeigt keinen Menschen.</p>
+      <p>Universit&auml;tsklinikum Dresden &middot; powered by DIZ &middot;
+        Entwurfsfassung</p>
+    </footer>
+  </main>
+</body>
+
+</html>

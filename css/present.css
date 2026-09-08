@@ -1,0 +1,67 @@
+/* ==================================================================== *
+ * carus.one - Vortragsmodus (teaser/index.html)
+ *
+ * Nur die Abweichungen gegenueber css/teaser.css: die Sequenz fuellt das
+ * Fenster, die Seite scrollt nicht, und unten steht ein Hinweis auf die
+ * Tasten. Alles andere kommt unveraendert aus teaser.css.
+ * ==================================================================== */
+
+html,
+body.pv {
+  margin: 0;
+  height: 100%;
+  /* Kein Scrollweg: hier liegt nichts unter der Sequenz. */
+  overflow: hidden;
+  background-color: #05070b;
+}
+
+.pv__stage {
+  display: block;
+  height: 100%;
+}
+
+/* Ohne Navigationsleiste darueber duerfen die Tasten hoeher sitzen. */
+body.pv .c1-tools {
+  top: clamp(1rem, 3vh, 1.6rem);
+}
+
+/* Der Hinweis auf die Tasten steht mittig unten zwischen den beiden
+   Angaben der Fusszeile und verschwindet, sobald er gelesen sein kann.
+   Eine Bewegung des Zeigers oder eine Taste holt ihn zurueck. */
+.pv-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.95rem;
+  z-index: 5;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.15rem;
+  max-width: min(38rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  color: #bcc8d8;
+  font: 400 0.75rem/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.pv-hint b {
+  color: #eef3fa;
+  font-weight: 500;
+}
+
+.pv-hint.is-off { opacity: 0; }
+
+/* Auf schmalen Geraeten gibt es keine Tastatur - dann nur die Tasten
+   oben rechts, kein Hinweis, der die Fusszeile ueberlagert. */
+@media (max-width: 40rem), (pointer: coarse) {
+  .pv-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-hint { transition: none; }
+}
