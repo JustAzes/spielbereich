@@ -946,7 +946,7 @@
       el: el, kind: kind, idx: idx, x: ax, y: ay, z: az, r: ar,
       align: el.getAttribute('data-c1-align') || 'center',
       panel: ari !== null,
-      flip: false, from: from, to: to, fade: fade, shown: false,
+      mode: 'right', w: 0, from: from, to: to, fade: fade, shown: false,
       lastTr: '', lastOp: ''
     });
   });
@@ -1147,6 +1147,12 @@
     return out;
   }
 
+  /* Abstand zwischen dem Punkt und der Beschriftung. */
+  var LABEL_GAP = 18;
+  /* Sicherheitsabstand zum Bildrand: so weit darf eine Beschriftung an den
+     Rand heran, nie darüber hinaus. */
+  var LABEL_EDGE = 14;
+
   function drawLabels(p, m01, m12) {
     for (var i = 0; i < labels.length; i++) {
       var L = labels[i];
@@ -1200,6 +1206,10 @@
       if (L.kind === 'ring') { sc = Math.max(0.66, Math.min(1.1, 1.35 / Math.max(0.4, depth))); }
       var op = vis * (L.kind === 'center' ? 1 : Math.max(0.32, Math.min(1, 2.9 / Math.max(0.4, depth))));
       if (L.kind === 'ring') { op = vis * Math.max(0.5, Math.min(1, 2.4 / Math.max(0.4, depth))); }
+      /* Die Größe wird in Zweiprozentschritten gerastert, damit der Text
+         nicht in jedem Bild neu gerastert wird - und weil die Breite im
+         Bild von genau diesem Wert abhängt, wird hier damit gerechnet. */
+      var scq = Math.round(sc * 50) / 50;
       if (!L.shown) {
         L.el.style.visibility = 'visible';
         L.el.style.willChange = 'transform, opacity';
@@ -1207,29 +1217,63 @@
         L.shown = true;
         /* "right" setzt den Text neben den Punkt, damit die dünne Linie
            davor vom Punkt weg läuft und die Schrift ihn nicht verdeckt.
-           Am rechten Rand klappt er nach links, damit nichts abgeschnitten
-           wird (siehe is-flip). Die Seite wird einmal beim Erscheinen
-           festgelegt und bis zum Ausblenden gehalten: sonst springt die
-           Beschriftung mitten im Bild um ihre eigene Breite, sobald die
-           Kamera den Punkt über die Schwelle trägt. */
+           Wo daneben kein Platz ist, klappt er auf die andere Seite; ist
+           auch dort keiner, steht er unter dem Punkt (is-stack). Das
+           entscheidet die gemessene Breite, nicht die Position allein -
+           sonst laufen lange Zeilen auf schmalen Geräten aus dem Bild.
+           Die Lage wird einmal beim Erscheinen festgelegt und bis zum
+           Ausblenden gehalten: sonst springt die Beschriftung mitten im
+           Bild um ihre eigene Breite, sobald die Kamera den Punkt über
+           eine Schwelle trägt. */
         if (L.align === 'right') {
-          L.flip = scr[0] > view.cssW * 0.58;
-          L.el.classList.toggle('is-flip', L.flip);
+          L.el.classList.remove('is-flip', 'is-stack');
+          L.w = L.el.offsetWidth;
+          /* Der Ursprung der Skalierung liegt in der Mitte des Kastens,
+             deshalb reicht der Text um die halbe Layoutbreite plus die
+             halbe skalierte Breite über den Ankerpunkt hinaus. */
+          var reach0 = L.w * 0.5 * (1 + scq);
+          L.mode = (scr[0] + LABEL_GAP + reach0 <= view.cssW - LABEL_EDGE) ? 'right'
+            : ((scr[0] - LABEL_GAP - reach0 >= LABEL_EDGE) ? 'flip' : 'stack');
+          if (L.mode !== 'right') { L.el.classList.add('is-' + (L.mode === 'flip' ? 'flip' : 'stack')); }
         }
       }
       /* Nur schreiben, was sich geändert hat: jede Zuweisung kostet einen
          Stilabgleich. */
       var ops = op.toFixed(2);
       if (ops !== L.lastOp) { L.el.style.opacity = ops; L.lastOp = ops; }
-      var off = L.align === 'right'
-        ? (L.flip ? 'translate(-100%,-50%) translateX(-18px)' : 'translate(18px,-50%)')
-        : 'translate(-50%,-50%)';
+      var px = scr[0];
+      var off = 'translate(-50%,-50%)';
+      if (L.align === 'right') {
+        /* Auf sehr schmalen Geräten ist selbst der gedeckelte Kasten in der
+           Tiefenskalierung breiter als das Bild. Dann wird die Beschriftung
+           genau so weit verkleinert, dass sie zwischen die Ränder passt. */
+        var fit = Math.floor((view.cssW - 2 * LABEL_EDGE) / Math.max(1, L.w) * 50) / 50;
+        if (fit < scq) { scq = fit; }
+        var half = L.w * 0.5;
+        var reach = half * (1 + scq);
+        /* Die Lage steht fest, die Kamera trägt den Punkt aber weiter. Damit
+           die Beschriftung dabei nicht aus dem Bild läuft, wird ihre
+           Ankerposition am Rand angehalten - ein weiches Auflaufen, kein
+           Umspringen. */
+        if (L.mode === 'flip') {
+          off = 'translate(-100%,-50%) translateX(-' + LABEL_GAP + 'px)';
+          px = Math.max(LABEL_EDGE + LABEL_GAP + reach, px);
+        } else if (L.mode === 'stack') {
+          /* Unter dem Punkt und mittig darauf, dabei im Bild gehalten. */
+          off = 'translate(-50%,0) translateY(' + LABEL_GAP + 'px)';
+          var halfS = half * scq;
+          px = Math.max(LABEL_EDGE + halfS,
+            Math.min(view.cssW - LABEL_EDGE - halfS, px));
+        } else {
+          off = 'translate(' + LABEL_GAP + 'px,-50%)';
+          px = Math.min(view.cssW - LABEL_EDGE - LABEL_GAP - reach, px);
+        }
+      }
       /* Position mit Nachkommastellen: auf ganze Pixel gerundet springt die
          Schrift bei langsamer Bewegung in Stufen, das liest sich als
-         Zittern. Die Größe wird in Zweiprozentschritten gerastert, damit
-         der Text nicht in jedem Bild neu gerastert wird. */
-      var tr = 'translate3d(' + scr[0].toFixed(2) + 'px,' + scr[1].toFixed(2) +
-        'px,0) ' + off + ' scale(' + (Math.round(sc * 50) / 50).toFixed(2) + ')';
+         Zittern. */
+      var tr = 'translate3d(' + px.toFixed(2) + 'px,' + scr[1].toFixed(2) +
+        'px,0) ' + off + ' scale(' + scq.toFixed(2) + ')';
       if (tr !== L.lastTr) { L.el.style.transform = tr; L.lastTr = tr; }
     }
   }

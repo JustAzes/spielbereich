@@ -81,6 +81,9 @@ Geometrie; `tools/brueckner-logo.py` erzeugt daraus das SVG.
 über den Anforderungen von WCAG 2.2 AA, keine waagerechten Überläufe bei
 1440 / 768 / 390 / 320 Pixel, Textvergrößerung bis 200 Prozent,
 vollständige Tastaturbedienung, lesbar ohne JavaScript und ohne WebGL 2.
+Die sechs Datenpunkte der Einstiegsanimation wurden einzeln angesprungen
+und ausgemessen: bei 280 / 320 / 360 / 390 / 768 / 1024 / 1440 / 1920
+Pixel steht jede Zeile vollständig im Bild.
 
 **Brückner:** axe-core ohne Verstöße, Aufbau in sechs Zeitschnitten
 kontrolliert, Neustart-Taste, kein Überlauf bei 390 und 320 Pixel,
