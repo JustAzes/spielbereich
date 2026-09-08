@@ -1,0 +1,678 @@
+/* carus.one – der Informationsbereich unter dem Teaser (/index4/).
+ *
+ * Ein Gestaltungssystem, keine Sammlung von Effekten: durchgehend
+ * dieselbe Inhaltsbreite, dieselben Abstaende, dieselbe Typografie.
+ * Der Teaser bleibt das visuelle Highlight; hier zaehlt Lesbarkeit.
+ *
+ * Alle Farben sind volldeckend gesetzt, damit die Kontraste messbar
+ * bleiben (Ziel: WCAG 2.2 AA).
+ */
+
+:root {
+  --v-max: 1160px;
+  --v-pad: clamp(1.25rem, 4vw, 2.5rem);
+  --v-bg: #05070b;
+  --v-fg: #f4f7fb;
+  --v-body: #ccd6e4;
+  --v-mute: #97a7bc;
+  --v-accent: #8ab4e8;
+  --v-line: rgba(196, 214, 240, 0.16);
+  --v-line-soft: rgba(196, 214, 240, 0.09);
+}
+
+/* --- Grundlagen ------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--v-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- Sprunglink ------------------------------------------------------ */
+
+.v-skip {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 40;
+  transform: translate(-50%, -120%);
+  padding: 0.75rem 1.25rem;
+  background-color: #0b1018;
+  border: 1px solid var(--v-accent);
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  color: var(--v-fg);
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.v-skip:focus {
+  transform: translate(-50%, 0);
+}
+
+/* --- Navigation ------------------------------------------------------ */
+
+.v-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0 var(--v-pad);
+  /* Im schwarzen Auftakt tritt die Leiste zurueck. Der schwache Verlauf
+     sichert den Kontrast auch dort, wo helle Partikel liegen. */
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, rgba(5, 7, 11, 0.88), rgba(5, 7, 11, 0.45) 60%, rgba(5, 7, 11, 0));
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.v-nav.is-stuck {
+  background-color: rgba(5, 7, 11, 0.94);
+  background-image: none;
+  border-bottom-color: var(--v-line-soft);
+}
+
+.v-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-right: 0.5rem;
+  color: var(--v-fg);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.v-nav nav ul {
+  display: flex;
+  gap: clamp(0.15rem, 1.4vw, 0.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v-nav nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 clamp(0.4rem, 1.2vw, 0.85rem);
+  color: #b3c0d2;
+  font-size: clamp(0.82rem, 1.1vw, 0.94rem);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.v-nav nav a:hover,
+.v-nav nav a:focus-visible {
+  color: var(--v-fg);
+}
+
+/* Schmale Geraete: die Leiste muss vollstaendig hineinpassen. */
+@media (max-width: 30rem) {
+  .v-nav {
+    padding: 0 0.75rem;
+  }
+
+  .v-nav__brand {
+    font-size: 0.88rem;
+    padding-right: 0.25rem;
+  }
+
+  .v-nav nav ul {
+    gap: 0;
+  }
+
+  .v-nav nav a {
+    padding: 0 0.3rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* --- Abschnitte ------------------------------------------------------ */
+
+main {
+  /* Deutsche Zusammensetzungen sind lang: bei starker Textvergroesserung
+     muessen sie umbrechen duerfen, statt aus der Spalte zu laufen. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+  position: relative;
+  z-index: 1;
+  display: block;
+  background-color: var(--v-bg);
+  color: var(--v-body);
+  font-family: var(--c1-sans);
+  /* Weicher Anschluss an die dunkle Szene darueber. */
+  box-shadow: 0 -6rem 6rem -3rem rgba(5, 7, 11, 0.9);
+}
+
+.s {
+  padding: clamp(3.75rem, 7.5vw, 6.5rem) 0;
+  border-top: 1px solid var(--v-line-soft);
+  scroll-margin-top: 4.5rem;
+}
+
+.s:first-child {
+  border-top: 0;
+}
+
+.s__inner {
+  width: min(var(--v-max), 100% - 2 * var(--v-pad));
+  margin: 0 auto;
+}
+
+.s__kicker {
+  margin: 0 0 0.9rem;
+  color: var(--v-accent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.s__h {
+  max-width: 24em;
+  margin: 0 0 clamp(1.75rem, 3.5vw, 2.75rem);
+  color: var(--v-fg);
+  font-size: clamp(1.7rem, 3.3vw, 2.6rem);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.s__lead p {
+  max-width: 34em;
+  margin: 0 0 1.1rem;
+  font-size: clamp(1rem, 0.35vw + 0.93rem, 1.125rem);
+  line-height: 1.62;
+}
+
+.s__lead p:last-child {
+  margin-bottom: 0;
+}
+
+.s__aside {
+  color: var(--v-mute);
+  font-size: clamp(0.94rem, 0.25vw + 0.88rem, 1rem) !important;
+}
+
+.s__note {
+  max-width: 44em;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--v-line-soft);
+  color: var(--v-mute);
+  font-size: clamp(0.94rem, 0.25vw + 0.88rem, 1.02rem);
+  line-height: 1.6;
+}
+
+.s__cols {
+  display: grid;
+  gap: clamp(2.25rem, 4.5vw, 3.5rem);
+}
+
+@media (min-width: 62rem) {
+  .s__cols {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .s__cols--wide {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+
+/* --- Die vier Anwendungsbereiche ------------------------------------- */
+
+.fields {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--v-line);
+}
+
+.fields li {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--v-line-soft);
+}
+
+.fields h3 {
+  margin: 0 0 0.35rem;
+  color: var(--v-fg);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.fields p {
+  max-width: 30em;
+  margin: 0;
+  font-size: clamp(0.95rem, 0.25vw + 0.89rem, 1.02rem);
+  line-height: 1.55;
+}
+
+@media (min-width: 34rem) {
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
+/* --- Die Schichtung des Fundaments ---------------------------------- */
+
+.stack {
+  margin: 0;
+}
+
+.stack__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack__row {
+  position: relative;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--v-line);
+  background-color: rgba(138, 180, 232, 0.04);
+}
+
+.stack__row + .stack__row {
+  margin-top: 0.85rem;
+}
+
+/* Pfeil nach oben: was auf was aufbaut. */
+.stack__row + .stack__row::after {
+  content: "";
+  position: absolute;
+  top: -0.85rem;
+  left: 1.6rem;
+  width: 1px;
+  height: 0.85rem;
+  background-color: var(--v-line);
+}
+
+.stack__row--top {
+  border-color: rgba(138, 180, 232, 0.42);
+  background-color: rgba(138, 180, 232, 0.09);
+}
+
+.stack__row b {
+  display: block;
+  color: var(--v-fg);
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.stack__row span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--v-mute);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.stack figcaption {
+  margin-top: 1rem;
+  color: var(--v-mute);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* --- Die drei Schwerpunkte ------------------------------------------ */
+
+.pillars {
+  display: grid;
+  gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pillars li {
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--v-line);
+}
+
+.pillars h3 {
+  margin: 0 0 0.5rem;
+  color: var(--v-fg);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.pillars p {
+  max-width: 34em;
+  margin: 0;
+  font-size: clamp(0.95rem, 0.25vw + 0.89rem, 1.02rem);
+  line-height: 1.6;
+}
+
+@media (min-width: 62rem) {
+  .pillars {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* --- Der Lebenszyklus ----------------------------------------------- */
+
+.flow-wrap {
+  position: relative;
+  margin: clamp(2.25rem, 4.5vw, 3.5rem) 0 0;
+}
+
+.flow {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 2rem;
+  list-style: none;
+}
+
+/* Die durchgehende Linie greift die Verbindungen des Teasers auf. */
+.flow::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  left: 0.4375rem;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(138, 180, 232, 0.55), rgba(138, 180, 232, 0.26));
+}
+
+.flow__step {
+  position: relative;
+  padding-bottom: clamp(1.9rem, 3.6vw, 2.9rem);
+}
+
+.flow__step:last-child {
+  padding-bottom: 0;
+}
+
+/* Der Punkt sitzt auf der Linie, auf Hoehe der Phasennummer. */
+.flow__step::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: -1.78rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #cfe0f7;
+  box-shadow: 0 0 0 3px var(--v-bg), 0 0 12px rgba(138, 180, 232, 0.7);
+}
+
+.flow__n {
+  margin: 0 0 0.3rem;
+  color: var(--v-accent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.flow__step h3 {
+  margin: 0 0 0.5rem;
+  color: var(--v-fg);
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.28;
+}
+
+.flow__t {
+  max-width: 36em;
+  margin: 0;
+  font-size: clamp(0.95rem, 0.3vw + 0.88rem, 1.06rem);
+  line-height: 1.62;
+}
+
+@media (min-width: 62rem) {
+  .flow {
+    padding-left: 4.5rem;
+  }
+
+  .flow::before {
+    left: 2.4375rem;
+  }
+
+  .flow__step {
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: 0 clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .flow__step::before {
+    left: -2.28rem;
+  }
+
+  .flow__step h3 {
+    margin-bottom: 0;
+  }
+}
+
+/* Die Rueckfuehrung: eine Klammer von der letzten zur ersten Phase macht
+   die Iteration sichtbar - ohne eine automatische Freigabe zu behaupten. */
+.flow__loop {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .flow__loop {
+    position: absolute;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    left: 0;
+    display: block;
+    width: 1.5rem;
+    margin: 0;
+    border: 1px solid rgba(138, 180, 232, 0.3);
+    border-right: 0;
+    border-radius: 0.7rem 0 0 0.7rem;
+    pointer-events: none;
+  }
+
+  /* Pfeilspitze oben: der Weg fuehrt zurueck zur ersten Phase. */
+  .flow__loop::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -4px;
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid rgba(138, 180, 232, 0.55);
+    border-right: 1px solid rgba(138, 180, 232, 0.55);
+    transform: rotate(-45deg);
+  }
+
+  .flow__loop span {
+    position: absolute;
+    top: 50%;
+    left: 0.05rem;
+    color: var(--v-mute);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 62rem) {
+  .flow__loop {
+    left: 0.5rem;
+  }
+}
+
+/* --- Abschluss ------------------------------------------------------- */
+
+.s--end .s__h {
+  max-width: 30em;
+}
+
+.motif {
+  display: block;
+  width: min(24rem, 100%);
+  height: auto;
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+}
+
+.motif__lines path {
+  fill: none;
+  stroke: rgba(138, 180, 232, 0.4);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.motif__dots line {
+  stroke: #dbe7f8;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.motif__hub {
+  stroke-width: 8 !important;
+}
+
+.motif__far {
+  stroke: #93a3b8 !important;
+  stroke-width: 3 !important;
+}
+
+.close {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--v-line-soft);
+}
+
+.close__word {
+  margin: 0;
+  color: var(--v-fg);
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+
+.close__claim {
+  max-width: 26em;
+  margin: 0.75rem 0 0;
+  color: var(--v-fg);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.close__status {
+  margin: 1.4rem 0 0;
+  color: var(--v-accent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.close__note {
+  max-width: 40em;
+  margin: 0.9rem 0 0;
+  color: var(--v-mute);
+  font-size: clamp(0.94rem, 0.25vw + 0.88rem, 1.02rem);
+  line-height: 1.6;
+}
+
+/* --- Fussbereich ----------------------------------------------------- */
+
+.v-foot {
+  overflow-wrap: break-word;
+  position: relative;
+  z-index: 1;
+  padding: clamp(2.25rem, 4vw, 3.25rem) 0 clamp(2.5rem, 5vw, 4rem);
+  background-color: var(--v-bg);
+  border-top: 1px solid var(--v-line-soft);
+  color: var(--v-mute);
+  font-family: var(--c1-sans);
+}
+
+.v-foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  width: min(var(--v-max), 100% - 2 * var(--v-pad));
+  margin: 0 auto;
+}
+
+.v-foot p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.v-foot__note {
+  max-width: 34em;
+}
+
+.v-foot a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 0.6rem 0;
+  color: var(--v-body);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.v-foot a:hover {
+  color: var(--v-fg);
+}
+
+/* --- Einblenden beim ersten Erscheinen -------------------------------
+ * Nur wenn das Skript laeuft. Ohne JavaScript ist alles sofort da.
+ * ------------------------------------------------------------------- */
+
+.v-anim [data-v-in] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.v-anim [data-v-in].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v-anim [data-v-in] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .v-skip,
+  .v-nav {
+    transition: none;
+  }
+}
