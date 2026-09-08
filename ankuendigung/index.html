@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!--
+  carus.one - Ankuendigungsseite (Entwurf).
+
+  Eigenstaendige statische Seite: eine HTML-Datei, zwei Stylesheets, zwei
+  Skripte, vier Bilder. Kein Generator, kein Framework, keine externen
+  Abhaengigkeiten. Alle Pfade sind relativ, damit die Seite im
+  Unterverzeichnis einer GitHub-Projektseite genauso laeuft wie unter
+  einer eigenen Domain.
+
+  Alle klinischen Werte in der Einstiegsanimation sind synthetische
+  Beispieldaten. Das Roentgenbild ist rein rechnerisch erzeugt
+  (tools/carus-xray.py), Symbol und Vorschaubild ebenso
+  (tools/carus-brand.py).
+-->
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>carus.one &ndash; Daten und KI f&uuml;r die Universit&auml;tsmedizin</title>
+  <meta name="description" content="carus.one entsteht als gemeinsames Daten- und KI-Ökosystem des Universitätsklinikums Dresden – für Forschung, Qualitätsmanagement, Organisation und perspektivisch die Versorgung. Die Plattform ist im Aufbau.">
+  <meta name="theme-color" content="#05070b">
+  <link rel="icon" href="../img/carus-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../img/carus-icon-180.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="carus.one">
+  <meta property="og:url" content="https://justazes.github.io/spielbereich/ankuendigung/">
+  <meta property="og:title" content="carus.one – Daten und KI für die Universitätsmedizin">
+  <meta property="og:description" content="Ein gemeinsames Daten- und KI-Ökosystem für Forschung, Qualitätsmanagement, Organisation und perspektivisch die Versorgung. Im Aufbau.">
+  <meta property="og:image" content="https://justazes.github.io/spielbereich/img/carus-share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="carus.one – dunkles Datennetz mit dem Schriftzug carus.one">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../css/teaser.css">
+  <link rel="stylesheet" href="../css/page.css">
+  <noscript>
+    <style>
+      .c1__canvas { display: none !important; }
+      .c1__stars { display: block !important; }
+      .c1__layer,
+      .c1-tools,
+      .c1-progress { display: none !important; }
+      .c1-word,
+      .c1-slogan__a,
+      .c1-slogan__b,
+      .c1-final > p { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+
+<body>
+  <a class="v-skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="v-nav">
+    <a class="v-nav__brand" href="#top">carus.one</a>
+    <nav aria-label="Abschnitte dieser Seite">
+      <ul>
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#fundament">Fundament</a></li>
+        <li><a href="#lebenszyklus">Lebenszyklus</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- teaser:start - Quelle der abgeleiteten Seiten, siehe
+       tools/embed-teaser.py. Aenderungen hier, dann das Werkzeug laufen
+       lassen; nicht in den Zielseiten von Hand nacharbeiten. -->
+  <section class="c1" data-c1 id="top" aria-label="Einstiegsanimation von carus.one">
+    <canvas class="c1__canvas" data-c1-canvas aria-hidden="true"></canvas>
+
+    <div class="c1__stars" aria-hidden="true"></div>
+
+    <div class="c1__layer">
+    <!-- Szene 3: klinische Datenpunkte entlang des Kamerapfads.
+         Das Zeitfenster kommt aus DP_START/DP_STEP im Skript (data-c1-dp),
+         from/to hier sind nur Dokumentation. -->
+    <figure class="c1-dp" data-c1-dp="0" data-c1-align="right" data-c1-anchor="node:spine0" data-c1-from="0.160" data-c1-to="0.203"><span class="c1-dp__k">Diagnose</span><span class="c1-dp__v">ICD-10-GM &middot; I50.1</span><span class="c1-dp__s">FHIR &middot; Condition</span></figure>
+    <figure class="c1-dp" data-c1-dp="1" data-c1-align="right" data-c1-anchor="node:spine1" data-c1-from="0.203" data-c1-to="0.245"><span class="c1-dp__k">Alter</span><span class="c1-dp__v">35 Jahre</span><span class="c1-dp__s">FHIR &middot; Patient</span></figure>
+    <figure class="c1-dp" data-c1-dp="2" data-c1-align="right" data-c1-anchor="node:spine2" data-c1-from="0.245" data-c1-to="0.287"><span class="c1-dp__k">Labor</span><span class="c1-dp__v">CRP &middot; 18.4 mg/L</span><span class="c1-dp__s">LOINC &middot; 1988-5 &middot; FHIR &middot; Observation</span></figure>
+    <figure class="c1-dp" data-c1-dp="3" data-c1-align="right" data-c1-anchor="node:spine3" data-c1-from="0.287" data-c1-to="0.330"><span class="c1-dp__k">Prozedur</span><span class="c1-dp__v">OPS &middot; 5-351.02</span><span class="c1-dp__s">FHIR &middot; Procedure</span></figure>
+    <figure class="c1-dp" data-c1-dp="4" data-c1-align="right" data-c1-anchor="node:spine4" data-c1-from="0.330" data-c1-to="0.372"><span class="c1-dp__k">Medikation</span><span class="c1-dp__v">Wirkstoff &middot; Dosis &middot; Zeitpunkt</span><span class="c1-dp__s">FHIR &middot; MedicationStatement</span></figure>
+    <figure class="c1-dp" data-c1-dp="5" data-c1-align="right" data-c1-anchor="node:spine5" data-c1-from="0.373" data-c1-to="0.415"><span class="c1-dp__k">Bildgebung</span><span class="c1-dp__v">CT &middot; DICOM</span><span class="c1-dp__s">FHIR &middot; ImagingStudy</span></figure>
+
+    <!-- Szene 3b: dieselben Daten, wie sie im Alltag begegnen.
+         Reduzierte Drahtgitter, keine Bildschirmfotos. Zeitfenster und
+         Position kommen aus AR_START/AR_STEP/AR_POS im Skript. -->
+    <figure class="c1-art c1-art--doc" data-c1-art="0" data-c1-from="0.420" data-c1-to="0.452">
+      <figcaption class="c1-art__t">Arztbrief</figcaption>
+      <div class="c1-art__page" aria-hidden="true"><span class="c1-art__hd"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span><span class="c1-art__l"></span></div>
+      <p class="c1-art__m">FHIR &middot; DocumentReference</p>
+    </figure>
+    <figure class="c1-art c1-art--mon" data-c1-art="1" data-c1-from="0.462" data-c1-to="0.495">
+      <figcaption class="c1-art__t">Vitalwerte &middot; Intensivmedizin</figcaption>
+      <div class="c1-art__mon">
+        <div class="c1-art__trace"><svg class="c1-ecg" viewBox="0 0 240 60" preserveAspectRatio="none" aria-hidden="true"><g class="c1-ecg__g"><path class="c1-ecg__glow" d="M0 30L10 30Q15 23 21 30L29 30L31.5 34L33.5 30L36 5L38.5 30L40.5 41L42.5 30L50 30Q59 17 68 30L80 30M80 30L90 30Q95 23 101 30L109 30L111.5 34L113.5 30L116 5L118.5 30L120.5 41L122.5 30L130 30Q139 17 148 30L160 30M160 30L170 30Q175 23 181 30L189 30L191.5 34L193.5 30L196 5L198.5 30L200.5 41L202.5 30L210 30Q219 17 228 30L240 30M240 30L250 30Q255 23 261 30L269 30L271.5 34L273.5 30L276 5L278.5 30L280.5 41L282.5 30L290 30Q299 17 308 30L320 30M320 30L330 30Q335 23 341 30L349 30L351.5 34L353.5 30L356 5L358.5 30L360.5 41L362.5 30L370 30Q379 17 388 30L400 30M400 30L410 30Q415 23 421 30L429 30L431.5 34L433.5 30L436 5L438.5 30L440.5 41L442.5 30L450 30Q459 17 468 30L480 30"/><path class="c1-ecg__line" d="M0 30L10 30Q15 23 21 30L29 30L31.5 34L33.5 30L36 5L38.5 30L40.5 41L42.5 30L50 30Q59 17 68 30L80 30M80 30L90 30Q95 23 101 30L109 30L111.5 34L113.5 30L116 5L118.5 30L120.5 41L122.5 30L130 30Q139 17 148 30L160 30M160 30L170 30Q175 23 181 30L189 30L191.5 34L193.5 30L196 5L198.5 30L200.5 41L202.5 30L210 30Q219 17 228 30L240 30M240 30L250 30Q255 23 261 30L269 30L271.5 34L273.5 30L276 5L278.5 30L280.5 41L282.5 30L290 30Q299 17 308 30L320 30M320 30L330 30Q335 23 341 30L349 30L351.5 34L353.5 30L356 5L358.5 30L360.5 41L362.5 30L370 30Q379 17 388 30L400 30M400 30L410 30Q415 23 421 30L429 30L431.5 34L433.5 30L436 5L438.5 30L440.5 41L442.5 30L450 30Q459 17 468 30L480 30"/></g></svg></div>
+        <div class="c1-art__grid">
+          <div><b class="c1-art__hr">82</b><i>HF / min</i></div>
+          <div><b>97</b><i>SpO&#8322; %</i></div>
+          <div><b>124/78</b><i>RR mmHg</i></div>
+          <div><b>14</b><i>AF / min</i></div>
+          <div><b>37.4</b><i>Temp &deg;C</i></div>
+          <div><b>0.4</b><i>Lactat mmol/L</i></div>
+        </div>
+      </div>
+      <p class="c1-art__m">FHIR &middot; Observation &middot; LOINC</p>
+    </figure>
+    <figure class="c1-art c1-art--img" data-c1-art="2" data-c1-from="0.505" data-c1-to="0.537">
+      <figcaption class="c1-art__t">R&ouml;ntgenthorax</figcaption>
+      <div class="c1-art__view">
+        <!-- Synthetische Thoraxaufnahme, rein rechnerisch erzeugt von
+             tools/carus-xray.py. Kein echtes Patientenbild. -->
+        <img class="c1-xray" src="../img/carus-xray-thorax.png"
+             width="512" height="512" alt="" aria-hidden="true" decoding="async" fetchpriority="low">
+        <span class="c1-art__ov c1-art__ov--tl">CR &middot; PA</span>
+        <span class="c1-art__ov c1-art__ov--tr">512 &times; 512</span>
+        <span class="c1-art__ov c1-art__ov--bl">WL 40 / WW 400</span>
+        <span class="c1-art__ov c1-art__ov--br">synthetisch</span>
+      </div>
+      <p class="c1-art__m">DICOM &middot; FHIR &middot; ImagingStudy</p>
+    </figure>
+
+    <!-- Szene 4: Cluster innerhalb des Patientenkontexts -->
+    <span class="c1-cluster" data-c1-anchor="node:cluster0" data-c1-from="0.5640" data-c1-to="0.6235">Radiology</span>
+    <span class="c1-cluster" data-c1-anchor="node:cluster1" data-c1-from="0.5700" data-c1-to="0.6235">Laboratory</span>
+    <span class="c1-cluster" data-c1-anchor="node:cluster2" data-c1-from="0.5760" data-c1-to="0.6235">Medication</span>
+    <span class="c1-cluster" data-c1-anchor="node:cluster3" data-c1-from="0.5820" data-c1-to="0.6235">Clinical Notes</span>
+    <span class="c1-cluster" data-c1-anchor="node:cluster4" data-c1-from="0.5880" data-c1-to="0.6235">Genomics</span>
+    <span class="c1-cluster" data-c1-anchor="node:cluster5" data-c1-from="0.5940" data-c1-to="0.6235">Vital Signs</span>
+    <span class="c1-faint" data-c1-anchor="world:0.82,0.30,-0.42" data-c1-from="0.5720" data-c1-to="0.6215">Encounter</span>
+    <span class="c1-faint" data-c1-anchor="world:-0.74,-0.24,0.52" data-c1-from="0.5720" data-c1-to="0.6215">Observation</span>
+    <span class="c1-faint" data-c1-anchor="world:0.16,-0.62,0.66" data-c1-from="0.5720" data-c1-to="0.6215">DiagnosticReport</span>
+    <span class="c1-faint" data-c1-anchor="world:-0.52,0.52,-0.58" data-c1-from="0.5720" data-c1-to="0.6215">MedicationStatement</span>
+    <span class="c1-faint" data-c1-anchor="world:0.60,-0.36,-0.66" data-c1-from="0.5720" data-c1-to="0.6215">ImagingStudy</span>
+    <span class="c1-faint" data-c1-anchor="world:-0.30,0.66,0.58" data-c1-from="0.5720" data-c1-to="0.6215">Condition</span>
+
+    <!-- Szene 4: die Standards kreisen um den Patientenkontext.
+         ring:Startwinkel,Radius,Hoehe,Geschwindigkeit -->
+    <span class="c1-std" data-c1-anchor="ring:0.00,1.06,0.20,0.16" data-c1-from="0.5620" data-c1-to="0.6215" data-c1-fade="0.012">FHIR</span>
+    <span class="c1-std" data-c1-anchor="ring:0.90,1.06,-0.12,0.16" data-c1-from="0.5650" data-c1-to="0.6215" data-c1-fade="0.012">OMOP</span>
+    <span class="c1-std" data-c1-anchor="ring:1.79,1.06,0.26,0.16" data-c1-from="0.5680" data-c1-to="0.6215" data-c1-fade="0.012">SNOMED CT</span>
+    <span class="c1-std" data-c1-anchor="ring:2.69,1.06,-0.18,0.16" data-c1-from="0.5710" data-c1-to="0.6215" data-c1-fade="0.012">LOINC</span>
+    <span class="c1-std" data-c1-anchor="ring:3.59,1.06,0.14,0.16" data-c1-from="0.5740" data-c1-to="0.6215" data-c1-fade="0.012">ICD-10-GM</span>
+    <span class="c1-std" data-c1-anchor="ring:4.49,1.06,-0.24,0.16" data-c1-from="0.5770" data-c1-to="0.6215" data-c1-fade="0.012">OPS</span>
+    <span class="c1-std" data-c1-anchor="ring:5.39,1.06,0.08,0.16" data-c1-from="0.5800" data-c1-to="0.6215" data-c1-fade="0.012">DICOM</span>
+
+    <!-- Szene 7: Capabilities in unterschiedlicher Raumtiefe -->
+    <span class="c1-cap" data-c1-anchor="world:0.00,0.68,0.00" data-c1-from="0.7680" data-c1-to="0.9360" data-c1-fade="0.03">Patient View</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.54,0.74,0.50" data-c1-from="0.7716" data-c1-to="0.9360" data-c1-fade="0.03">Data Products</span>
+    <span class="c1-cap" data-c1-anchor="world:0.10,0.77,-1.19" data-c1-from="0.7752" data-c1-to="0.9360" data-c1-fade="0.03">Research</span>
+    <span class="c1-cap" data-c1-anchor="world:1.00,0.76,1.30" data-c1-from="0.7788" data-c1-to="0.9360" data-c1-fade="0.03">AI Native</span>
+    <span class="c1-cap" data-c1-anchor="world:-1.06,0.38,-0.19" data-c1-from="0.7824" data-c1-to="0.9360" data-c1-fade="0.03">Secure Processing</span>
+    <span class="c1-cap" data-c1-anchor="world:1.21,0.37,-0.77" data-c1-from="0.7860" data-c1-to="0.9360" data-c1-fade="0.03">Clinical Intelligence</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.47,0.33,1.73" data-c1-from="0.7896" data-c1-to="0.9360" data-c1-fade="0.03">Self-Service</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.99,0.25,-1.90" data-c1-from="0.7932" data-c1-to="0.9360" data-c1-fade="0.03">FHIR</span>
+    <span class="c1-cap" data-c1-anchor="world:1.21,0.08,0.44" data-c1-from="0.7968" data-c1-to="0.9360" data-c1-fade="0.03">OMOP</span>
+    <span class="c1-cap" data-c1-anchor="world:-1.48,0.00,0.61" data-c1-from="0.8004" data-c1-to="0.9360" data-c1-fade="0.03">Multimodal Data</span>
+    <span class="c1-cap" data-c1-anchor="world:0.80,-0.11,-1.71" data-c1-from="0.8040" data-c1-to="0.9360" data-c1-fade="0.03">Real World Data</span>
+    <span class="c1-cap" data-c1-anchor="world:0.64,-0.25,2.05" data-c1-from="0.8076" data-c1-to="0.9360" data-c1-fade="0.03">Research Workspace</span>
+    <span class="c1-cap" data-c1-anchor="world:-1.06,-0.23,-0.61" data-c1-from="0.8112" data-c1-to="0.9360" data-c1-fade="0.03">Governed Access</span>
+    <span class="c1-cap" data-c1-anchor="world:1.40,-0.37,-0.31" data-c1-from="0.8148" data-c1-to="0.9360" data-c1-fade="0.03">Data Quality</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.91,-0.55,1.29" data-c1-from="0.8184" data-c1-to="0.9360" data-c1-fade="0.03">Clinical Operations</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.21,-0.76,-1.63" data-c1-from="0.8220" data-c1-to="0.9360" data-c1-fade="0.03">Synthetic Data</span>
+    <span class="c1-cap" data-c1-anchor="world:0.62,-0.53,0.53" data-c1-from="0.8256" data-c1-to="0.9360" data-c1-fade="0.03">Longitudinal Data</span>
+    <span class="c1-cap" data-c1-anchor="world:-0.73,-0.74,0.03" data-c1-from="0.8292" data-c1-to="0.9360" data-c1-fade="0.03">Interoperability</span>
+    <span class="c1-cap" data-c1-anchor="world:0.00,-0.99,-0.00" data-c1-from="0.8328" data-c1-to="0.9360" data-c1-fade="0.03">From Data to Care</span>
+
+    <!-- Szene 8: der Intelligence Layer -->
+    <span class="c1-ai c1-ai--lead" data-c1-anchor="world:0.34,0.30,0.20" data-c1-from="0.8395" data-c1-to="0.8880">Clinical AI</span>
+    <span class="c1-ai" data-c1-anchor="world:0.34,0.17,0.20" data-c1-from="0.8465" data-c1-to="0.8880">Research &rarr; Validate &rarr; Translate</span>
+    <span class="c1-ai" data-c1-anchor="world:-0.34,0.12,0.40" data-c1-from="0.8520" data-c1-to="0.8880">AI Sandbox</span>
+    <span class="c1-ai" data-c1-anchor="world:-0.40,-0.08,-0.26" data-c1-from="0.8565" data-c1-to="0.8880">Secure Processing Environment</span>
+    <span class="c1-ai" data-c1-anchor="world:0.22,-0.24,-0.40" data-c1-from="0.8610" data-c1-to="0.8880">Decision Support</span>
+
+      <!-- Szene 4: der Patientenkontext -->
+      <div class="c1-title" data-c1-anchor="center" data-c1-from="0.5510" data-c1-to="0.6200" data-c1-fade="0.02">
+        <p class="c1-title__h">Patient View</p>
+        <p class="c1-title__c">Many Systems. One Patient.</p>
+        <p class="c1-title__s">One longitudinal clinical context.</p>
+      </div>
+
+      <!-- Szene 5: aus Patienten werden Populationen -->
+      <div class="c1-title" data-c1-anchor="center" data-c1-from="0.6520" data-c1-to="0.7080" data-c1-fade="0.02">
+        <p class="c1-title__h">Population</p>
+        <p class="c1-title__s">Cohorts, outcomes, real world evidence.</p>
+      </div>
+    </div>
+
+    <!-- Szene 6 bis Finale: der Name entsteht aus dem Datenraum -->
+    <div class="c1-center">
+      <h1 class="c1-word" data-c1-word><span class="c1-word__a" data-c1-part="a">carus</span><span class="c1-word__b" data-c1-part="b">.one</span></h1>
+
+      <p class="c1-slogan">
+        <span class="c1-slogan__a" data-c1-slogan="a">Healthcare.</span>
+        <span class="c1-slogan__b" data-c1-slogan="b">beyond imagination.</span>
+      </p>
+
+      <div class="c1-final">
+        <p class="c1-final__kicker" data-c1-fin="0">Daten- und KI-&Ouml;kosystem</p>
+        <p class="c1-final__claim" data-c1-fin="1">One data foundation.<br>Endless possibilities.</p>
+        <p class="c1-final__meta" data-c1-fin="2">Forschung &middot; Versorgung &middot; KI &middot; Innovation</p>
+        <p class="c1-final__soon" data-c1-fin="3">Im Aufbau.</p>
+      </div>
+    </div>
+
+    <a class="c1-enter" href="#vision">Die Vision entdecken</a>
+
+    <p class="c1-foot">
+      <span class="c1-foot__org">Universit&auml;tsklinikum Dresden &middot; powered by DIZ</span>
+      <span class="c1-foot__note">Synthetische Beispieldaten &middot; Entwurf</span>
+    </p>
+
+    <div class="c1-tools">
+    <button class="c1-btn" type="button" data-c1-pause aria-pressed="false">
+      <span class="c1-btn__on">Animation anhalten</span>
+      <span class="c1-btn__off">Animation fortsetzen</span>
+      <svg class="c1-btn__i c1-btn__i--pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false">
+        <rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect>
+      </svg>
+      <svg class="c1-btn__i c1-btn__i--play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false">
+        <path d="M8 5l11 7-11 7z"></path>
+      </svg>
+    </button>
+    <button class="c1-replay c1-btn" type="button" data-c1-replay>
+      <span class="c1-btn__on">Sequenz neu starten</span>
+      <svg class="c1-btn__i" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M3 12a9 9 0 1 0 3.1-6.8"></path>
+        <path d="M3 4v5h5"></path>
+      </svg>
+    </button>
+    </div>
+
+    <div class="c1-progress" aria-hidden="true"><i data-c1-progress></i></div>
+  </section>
+  <!-- teaser:end -->
+
+
+  <!-- ================================================================ *
+   * Der Informationsbereich unter dem Teaser: vier zusammenhaengende
+   * Abschnitte in einer Leserichtung. Alle Texte stehen als HTML da und
+   * sind ohne JavaScript, ohne Klick und ohne Warten lesbar. Bewegung
+   * gibt es nur als kurze Einblendung (js/carus-vision.js).
+   * ================================================================ -->
+  <main id="inhalt">
+
+    <!-- 1 Die Vision --------------------------------------------------- -->
+    <section class="s" id="vision" aria-labelledby="vision-h">
+      <div class="s__inner">
+        <p class="s__kicker">Die Vision</p>
+        <h2 class="s__h" id="vision-h">Eine gemeinsame Basis f&uuml;r bessere Medizin.</h2>
+
+        <div class="s__cols" data-v-in>
+          <div class="s__lead">
+            <p>Wir entwickeln carus.one als gemeinsames Daten- und KI-&Ouml;kosystem f&uuml;r das Universit&auml;tsklinikum Dresden. Es soll klinische Informationen verbinden und sicher nutzbar machen &ndash; f&uuml;r Forschung, Qualit&auml;tsmanagement, Organisation und perspektivisch die Versorgung.</p>
+            <p>Nicht jedes Vorhaben soll seine eigene Datenwelt aufbauen m&uuml;ssen. Unser Ziel ist eine verl&auml;ssliche Grundlage, auf der aus Fragen Erkenntnisse und aus Erkenntnissen nutzbare Anwendungen entstehen.</p>
+          </div>
+
+          <ul class="fields">
+            <li>
+              <h3>Forschung</h3>
+              <p>Fragestellungen pr&uuml;fen, Daten erkunden und neue Erkenntnisse gewinnen.</p>
+            </li>
+            <li>
+              <h3>Qualit&auml;tsmanagement</h3>
+              <p>Behandlungsqualit&auml;t nachvollziehen und Verbesserungsm&ouml;glichkeiten erkennen.</p>
+            </li>
+            <li>
+              <h3>Organisation</h3>
+              <p>Prozesse und Ressourcen verstehen und Entscheidungen besser vorbereiten.</p>
+            </li>
+            <li>
+              <h3>Versorgung</h3>
+              <p>Validierte Anwendungen schrittweise in klinische Arbeitsabl&auml;ufe bringen.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 Das Fundament ------------------------------------------------ -->
+    <section class="s" id="fundament" aria-labelledby="fundament-h">
+      <div class="s__inner">
+        <p class="s__kicker">Das Fundament</p>
+        <h2 class="s__h" id="fundament-h">Eine starke Basis, die mitw&auml;chst.</h2>
+
+        <div class="s__cols s__cols--wide" data-v-in>
+          <div class="s__lead">
+            <p>Neue Ideen brauchen nicht jedes Mal eine neue technische Grundlage. carus.one soll Infrastruktur, vertrauensw&uuml;rdige Daten und wiederverwendbare Dienste so verbinden, dass neue Anwendungen auf Bestehendem aufbauen k&ouml;nnen.</p>
+          </div>
+
+          <!-- Einfache Schichtung: was auf was aufbaut. -->
+          <figure class="stack" aria-labelledby="stack-cap">
+            <ol class="stack__rows">
+              <li class="stack__row stack__row--top"><b>Anwendungen</b><span>Auswertungen, Datenservices, KI-Anwendungen</span></li>
+              <li class="stack__row"><b>Daten und Dienste</b><span>vertrauensw&uuml;rdige Daten, wiederverwendbare Bausteine</span></li>
+              <li class="stack__row"><b>Infrastruktur</b><span>Speicher, Rechenleistung, Plattformdienste</span></li>
+            </ol>
+            <figcaption id="stack-cap">Jede Ebene tr&auml;gt die dar&uuml;berliegende: Anwendungen entstehen auf gemeinsamen Daten und Diensten, diese auf einer Infrastruktur, die mitwachsen kann.</figcaption>
+          </figure>
+        </div>
+
+        <ul class="pillars" data-v-in>
+          <li>
+            <h3>Mit den Anforderungen wachsen</h3>
+            <p>Speicher, Rechenleistung und Plattformdienste sollen sich schrittweise erweitern lassen &ndash; f&uuml;r mehr Daten, neue Datenarten und zus&auml;tzliche Anwendungen.</p>
+          </li>
+          <li>
+            <h3>Sicher mit Daten und KI arbeiten</h3>
+            <p>Gesch&uuml;tzte Arbeitsumgebungen sollen Exploration, Forschung und Entwicklung erm&ouml;glichen. Dazu geh&ouml;ren die unterst&uuml;tzte Datenarbeit mit KI und die Entwicklung und Pr&uuml;fung eigener KI-Anwendungen &ndash; mit geregelten Zug&auml;ngen und klarer Verantwortung.</p>
+          </li>
+          <li>
+            <h3>Wissen und Systeme verbinden</h3>
+            <p>Offene Standards und dokumentierte Schnittstellen sollen Daten und Ergebnisse wiederverwendbar machen. Sie schaffen die Grundlage f&uuml;r Zusammenarbeit im Klinikum und perspektivisch mit nationalen und internationalen Partnern &ndash; innerhalb der jeweiligen Zugangsbedingungen.</p>
+          </li>
+        </ul>
+
+        <p class="s__note" data-v-in>Damit soll auch die Daten- und Arbeitsgrundlage f&uuml;r die KI-Klinik entstehen: f&uuml;r die gemeinsame Entwicklung, Pr&uuml;fung und &Uuml;berf&uuml;hrung intelligenter Anwendungen in den klinischen Alltag. Die Datenbereitstellung soll zum Einsatz passen &ndash; von reproduzierbaren Forschungsst&auml;nden bis zu zunehmend ereignisnahen Anwendungen.</p>
+      </div>
+    </section>
+
+    <!-- 3 Von der Idee zur Anwendung ----------------------------------- -->
+    <section class="s" id="lebenszyklus" aria-labelledby="life-h">
+      <div class="s__inner">
+        <p class="s__kicker">Der Lebenszyklus</p>
+        <h2 class="s__h" id="life-h">Von der ersten Frage bis zur nutzbaren Anwendung.</h2>
+
+        <div class="s__lead" data-v-in>
+          <p>Ein Vorhaben beginnt oft lange vor dem formalen Projektstart. carus.one soll diesen Weg begleiten: von der ersten Machbarkeitspr&uuml;fung &uuml;ber Forschung und Entwicklung bis zum verantworteten Betrieb und zur Weiterentwicklung.</p>
+          <p class="s__aside">Ein Datenprodukt kann dabei ein dokumentierter Datensatz, ein Datenservice, eine Auswertung oder eine validierte KI-Anwendung sein.</p>
+        </div>
+
+        <div class="flow-wrap" data-v-in>
+          <ol class="flow">
+            <li class="flow__step">
+              <div class="flow__head">
+                <p class="flow__n"><span class="visually-hidden">Phase </span>01</p>
+                <h3>Idee und Machbarkeit</h3>
+              </div>
+              <p class="flow__t">Welche Frage wollen wir beantworten? Welche Daten gibt es daf&uuml;r? Fr&uuml;he Machbarkeitspr&uuml;fungen, Kohortenabfragen und Exploration mit geeigneten Metadaten, aggregierten oder synthetischen Daten helfen, aus einer Idee eine belastbare Fragestellung zu entwickeln.</p>
+            </li>
+            <li class="flow__step">
+              <div class="flow__head">
+                <p class="flow__n"><span class="visually-hidden">Phase </span>02</p>
+                <h3>Erforschen und entwickeln</h3>
+              </div>
+              <p class="flow__t">Auf Grundlage des passenden Nutzungsrahmens werden erforderliche Daten zug&auml;nglich. Forschung, Medizin und Entwicklung arbeiten in gesch&uuml;tzten Umgebungen an Analysen, Modellen und ersten Anwendungen.</p>
+            </li>
+            <li class="flow__step">
+              <div class="flow__head">
+                <p class="flow__n"><span class="visually-hidden">Phase </span>03</p>
+                <h3>Pr&uuml;fen und freigeben</h3>
+              </div>
+              <p class="flow__t">Ergebnisse werden fachlich und technisch gepr&uuml;ft. Je nach Einsatzzweck werden klinische Validierung, Datenschutz, Sicherheit und weitere Anforderungen einbezogen. Zust&auml;ndige Akteure kl&auml;ren Freigabe, Verantwortung und Betrieb.</p>
+            </li>
+            <li class="flow__step">
+              <div class="flow__head">
+                <p class="flow__n"><span class="visually-hidden">Phase </span>04</p>
+                <h3>Anwenden und betreiben</h3>
+              </div>
+              <p class="flow__t">Freigegebene Datenprodukte werden in Forschung, Qualit&auml;tsmanagement, Organisation oder Versorgung genutzt. Datenqualit&auml;t, Funktionsf&auml;higkeit und gegebenenfalls Modellverhalten werden beobachtet; Erfahrungen aus der Nutzung flie&szlig;en zur&uuml;ck.</p>
+            </li>
+            <li class="flow__step">
+              <div class="flow__head">
+                <p class="flow__n"><span class="visually-hidden">Phase </span>05</p>
+                <h3>Weiterentwickeln oder abl&ouml;sen</h3>
+              </div>
+              <p class="flow__t">Neue Erkenntnisse und Anforderungen f&uuml;hren zu neuen Versionen. &Uuml;berholte Produkte werden kontrolliert ersetzt oder au&szlig;er Betrieb genommen. Geeignete Ergebnisse bleiben dokumentiert und k&ouml;nnen weitere Vorhaben unterst&uuml;tzen.</p>
+            </li>
+          </ol>
+
+          <p class="flow__loop" aria-hidden="true"><span>Iteration</span></p>
+        </div>
+
+        <p class="s__note" data-v-in>Datenzugang, Berechtigungen und Schutzma&szlig;nahmen begleiten jede Phase. Fr&uuml;he Exploration bedeutet nicht ungeregelten Zugriff.</p>
+      </div>
+    </section>
+
+    <!-- 4 Lernendes Oekosystem und Abschluss --------------------------- -->
+    <section class="s s--end" id="oekosystem" aria-labelledby="loop-h">
+      <div class="s__inner">
+        <h2 class="s__h" id="loop-h">Aus jeder Anwendung kann neues Wissen entstehen.</h2>
+
+        <div class="s__lead" data-v-in>
+          <p>Ergebnisse sollen nicht in einzelnen Projekten verschwinden. Gepr&uuml;fte Daten, Modelle, Annotationen und Erfahrungen k&ouml;nnen dokumentiert in das &Ouml;kosystem zur&uuml;ckflie&szlig;en &ndash; und dort, wo ihre Nutzung zul&auml;ssig ist, die Grundlage f&uuml;r weitere Vorhaben bilden.</p>
+          <p>So entsteht ein lernendes Daten&ouml;kosystem: Jede Nutzung kann helfen, die gemeinsame Basis weiterzuentwickeln.</p>
+        </div>
+
+        <!-- Ein einzelnes, ruhiges Motiv: drei Ergebnisse laufen als feine
+             Spuren in die gemeinsame Punktwolke zurueck. Greift die
+             Partikelaesthetik des Einstiegs auf, ohne ein Diagramm zu sein. -->
+        <svg class="motif" viewBox="0 0 320 120" role="img" aria-label="Drei einzelne Ergebnisse laufen als feine Spuren in eine gemeinsame Punktwolke zur&uuml;ck.">
+          <defs>
+            <linearGradient id="motifFade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#8ab4e8" stop-opacity="0.05"/>
+              <stop offset="0.35" stop-color="#8ab4e8" stop-opacity="0.42"/>
+              <stop offset="0.78" stop-color="#8ab4e8" stop-opacity="0.22"/>
+              <stop offset="1" stop-color="#8ab4e8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g class="motif__trails">
+            <path d="M18 34 C118 24 160 52 202 52"/>
+            <path d="M14 62 C108 66 158 60 208 60"/>
+            <path d="M22 90 C122 96 163 69 204 69"/>
+          </g>
+          <g class="motif__seeds">
+            <line x1="18" y1="34" x2="18" y2="34"/>
+            <line x1="14" y1="62" x2="14" y2="62"/>
+            <line x1="22" y1="90" x2="22" y2="90"/>
+          </g>
+          <g class="motif__cloud">
+            <circle cx="260.8" cy="29.8" r="0.74" opacity="0.25"/>
+            <circle cx="206.2" cy="78.7" r="0.75" opacity="0.25"/>
+            <circle cx="281.1" cy="87.0" r="0.77" opacity="0.22"/>
+            <circle cx="305.7" cy="55.8" r="0.78" opacity="0.24"/>
+            <circle cx="267.4" cy="31.8" r="0.79" opacity="0.27"/>
+            <circle cx="301.3" cy="64.8" r="0.86" opacity="0.29"/>
+            <circle cx="244.4" cy="88.3" r="0.88" opacity="0.30"/>
+            <circle cx="302.5" cy="64.5" r="0.90" opacity="0.28"/>
+            <circle cx="284.8" cy="79.7" r="0.92" opacity="0.32"/>
+            <circle cx="290.5" cy="45.3" r="0.92" opacity="0.33"/>
+            <circle cx="262.4" cy="30.5" r="0.92" opacity="0.26"/>
+            <circle cx="266.6" cy="35.2" r="0.95" opacity="0.34"/>
+            <circle cx="251.6" cy="89.4" r="0.96" opacity="0.27"/>
+            <circle cx="239.8" cy="31.9" r="1.00" opacity="0.29"/>
+            <circle cx="289.9" cy="71.9" r="1.05" opacity="0.37"/>
+            <circle cx="261.2" cy="34.5" r="1.06" opacity="0.34"/>
+            <circle cx="223.0" cy="79.6" r="1.07" opacity="0.38"/>
+            <circle cx="275.2" cy="39.8" r="1.09" opacity="0.38"/>
+            <circle cx="204.8" cy="52.6" r="1.11" opacity="0.35"/>
+            <circle cx="239.9" cy="84.3" r="1.14" opacity="0.37"/>
+            <circle cx="262.2" cy="82.8" r="1.17" opacity="0.39"/>
+            <circle cx="280.2" cy="47.2" r="1.22" opacity="0.45"/>
+            <circle cx="291.5" cy="69.4" r="1.22" opacity="0.37"/>
+            <circle cx="278.3" cy="76.3" r="1.26" opacity="0.42"/>
+            <circle cx="287.2" cy="72.4" r="1.28" opacity="0.39"/>
+            <circle cx="267.5" cy="38.3" r="1.30" opacity="0.40"/>
+            <circle cx="239.0" cy="42.4" r="1.30" opacity="0.50"/>
+            <circle cx="283.9" cy="64.2" r="1.31" opacity="0.49"/>
+            <circle cx="244.2" cy="37.8" r="1.32" opacity="0.42"/>
+            <circle cx="273.5" cy="75.2" r="1.36" opacity="0.48"/>
+            <circle cx="227.5" cy="78.1" r="1.37" opacity="0.43"/>
+            <circle cx="224.6" cy="46.5" r="1.39" opacity="0.49"/>
+            <circle cx="256.7" cy="77.6" r="1.39" opacity="0.52"/>
+            <circle cx="220.1" cy="63.5" r="1.40" opacity="0.54"/>
+            <circle cx="234.2" cy="45.7" r="1.42" opacity="0.54"/>
+            <circle cx="228.5" cy="46.2" r="1.48" opacity="0.51"/>
+            <circle cx="220.1" cy="67.0" r="1.52" opacity="0.52"/>
+            <circle cx="272.0" cy="59.9" r="1.67" opacity="0.64"/>
+            <circle cx="234.8" cy="50.3" r="1.71" opacity="0.63"/>
+            <circle cx="237.5" cy="69.3" r="1.72" opacity="0.65"/>
+            <circle cx="234.6" cy="51.4" r="1.72" opacity="0.64"/>
+            <circle cx="237.9" cy="47.2" r="1.73" opacity="0.59"/>
+            <circle cx="242.9" cy="68.7" r="1.78" opacity="0.70"/>
+            <circle cx="269.1" cy="62.6" r="1.81" opacity="0.67"/>
+            <circle cx="271.9" cy="62.2" r="1.84" opacity="0.64"/>
+            <circle cx="245.1" cy="53.0" r="1.85" opacity="0.74"/>
+            <circle cx="268.9" cy="64.9" r="1.88" opacity="0.66"/>
+            <circle cx="264.6" cy="62.1" r="1.90" opacity="0.72"/>
+            <circle cx="252.2" cy="65.7" r="1.97" opacity="0.78"/>
+            <circle cx="241.1" cy="66.2" r="2.04" opacity="0.73"/>
+            <circle cx="237.4" cy="61.6" r="2.06" opacity="0.75"/>
+            <circle cx="256.5" cy="62.4" r="2.07" opacity="0.81"/>
+          </g>
+        </svg>
+
+        <div class="close" data-v-in>
+          <p class="close__word">carus.one</p>
+          <p class="close__claim">Eine starke Basis. Von der Idee bis zur Wirkung.</p>
+          <p class="close__status">Im Aufbau.</p>
+          <p class="close__note">Wir entwickeln carus.one schrittweise. Diese Seite beschreibt unser Zielbild; die dargestellten F&auml;higkeiten entstehen in unterschiedlichen Ausbaustufen.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v-foot">
+    <div class="v-foot__inner">
+      <p class="v-foot__org"><a href="https://www.uniklinikum-dresden.de/" rel="noopener">Universit&auml;tsklinikum Dresden</a> &middot; powered by DIZ</p>
+      <p class="v-foot__note">Entwurfsfassung &middot; alle klinischen Werte in der Einstiegsanimation sind synthetische Beispieldaten.</p>
+      <p class="v-foot__back"><a href="../">Zur &Uuml;bersicht</a></p>
+    </div>
+  </footer>
+
+  <script src="../js/teaser.js" defer></script>
+  <script src="../js/page.js" defer></script>
+</body>
+
+</html>

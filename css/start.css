@@ -1,0 +1,146 @@
+/* ==================================================================== *
+ * carus.one - Uebersichtsseite (index.html)
+ *
+ * Nur eine Verteilerseite: vier Wege, jeder mit einem Satz dazu, wofuer
+ * er da ist. Keine Animation, kein JavaScript - sie soll sofort stehen.
+ * Farben und Abstaende wie im Rest des Hauses (css/page.css).
+ * ==================================================================== */
+
+:root {
+  --v-bg: #05070b;
+  --v-fg: #f4f7fb;
+  --v-body: #ccd6e4;
+  --v-mute: #9fb0c4;
+  --v-accent: #8ab4e8;
+  --v-line: rgba(214, 226, 245, 0.16);
+  --v-max: 58rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(2.2rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
+  background-color: var(--v-bg);
+  color: var(--v-body);
+  font: 400 clamp(1rem, 1.05vw, 1.06rem)/1.65 -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.st { max-width: var(--v-max); margin: 0 auto; }
+
+/* --- Kopf ----------------------------------------------------------- */
+
+.st__word {
+  margin: 0 0 0.5rem;
+  color: var(--v-fg);
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.st__word b { font-weight: 400; }
+
+.st__lead {
+  margin: 0 0 clamp(2.2rem, 6vw, 3.4rem);
+  max-width: 40em;
+  color: var(--v-mute);
+}
+
+/* --- Die vier Wege -------------------------------------------------- */
+
+.st__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.st__item {
+  border: 1px solid var(--v-line);
+  border-radius: 0.5rem;
+  background-color: rgba(138, 180, 232, 0.03);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.st__item:hover,
+.st__item:focus-within {
+  border-color: rgba(214, 226, 245, 0.4);
+  background-color: rgba(138, 180, 232, 0.07);
+}
+
+/* Der ganze Kasten ist der Link: ein grosses Ziel, auch auf dem
+   Telefon. Der Text liegt darin, nicht daneben. */
+.st__link {
+  display: block;
+  padding: clamp(1.05rem, 2.6vw, 1.5rem) clamp(1.1rem, 3vw, 1.8rem);
+  color: inherit;
+  text-decoration: none;
+}
+
+.st__link:focus-visible {
+  outline: 2px solid var(--v-accent);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+.st__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.st__name {
+  margin: 0;
+  color: var(--v-fg);
+  font-size: 1.14rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.st__facts {
+  color: var(--v-mute);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.st__what { margin: 0; max-width: 46em; }
+
+.st__what em { color: var(--v-body); font-style: normal; }
+
+.st__keys {
+  margin: 0.55rem 0 0;
+  color: var(--v-mute);
+  font-size: 0.9rem;
+}
+
+.st__keys b { color: var(--v-fg); font-weight: 500; }
+
+/* --- Fuss ----------------------------------------------------------- */
+
+.st__foot {
+  margin-top: clamp(2.4rem, 7vw, 4rem);
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--v-line);
+  color: var(--v-mute);
+  font-size: 0.86rem;
+}
+
+.st__foot p { margin: 0.25rem 0; }
+
+.st__foot a { color: var(--v-body); }
+
+a { color: var(--v-fg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .st__item { transition: none; }
+}

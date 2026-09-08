@@ -6,7 +6,8 @@ GitHub-Projektseite genauso wie unter einer eigenen Domain.
 
 | Seite | Wofür |
 | --- | --- |
-| [`/`](https://justazes.github.io/spielbereich/) | **Ankündigungsseite** – die Einstiegssequenz und darunter vier Abschnitte zum Lesen |
+| [`/`](https://justazes.github.io/spielbereich/) | **Übersicht** – der Verteiler, verlinkt die vier Unterseiten. Ohne Animation und ohne JavaScript |
+| [`/ankuendigung/`](https://justazes.github.io/spielbereich/ankuendigung/) | **Ankündigungsseite** – die Einstiegssequenz und darunter vier Abschnitte zum Lesen |
 | [`/teaser/`](https://justazes.github.io/spielbereich/teaser/) | **Sequenz im Vollbild** – nur die Animation, über die Tastatur geführt |
 | [`/praesentation/`](https://justazes.github.io/spielbereich/praesentation/) | **Vortragsseite** – die Sequenz als Auftakt, danach sechs Folien |
 | [`/backup/`](https://justazes.github.io/spielbereich/backup/) | **Rückfall** – dieselbe Sequenz als MP4 zum Ansehen und Herunterladen |
@@ -32,11 +33,13 @@ rechten Rand geklickt.
 ## Aufbau
 
 ```
-index.html                  die Ankündigungsseite, alle Texte als echtes HTML
+index.html                  die Übersicht, nur Verweise
+ankuendigung/index.html     die Ankündigungsseite, alle Texte als echtes HTML
 teaser/index.html           die Sequenz allein, für den Beamer
 praesentation/index.html    Folien, die Sequenz als Auftakt
 backup/index.html           Seite um den Film
 backup/*.mp4                der Film selbst
+css/start.css               die Übersicht
 css/teaser.css              die Sequenz
 css/page.css                Gestaltungssystem der Ankündigungsseite
 css/deck.css                Gestaltungssystem der Folien
@@ -51,10 +54,14 @@ tools/                      die Erzeuger von Bildern, Film und abgeleiteten Seit
 .nojekyll                   GitHub Pages liefert die Dateien unverändert aus
 ```
 
-Die Animation steht **genau einmal** im Haus: in `index.html` zwischen
-`<!-- teaser:start -->` und `<!-- teaser:end -->`. Die Seiten `/teaser/`
-und `/praesentation/` tragen dieselben Marken und bekommen den Abschnitt
-eingesetzt. Nach jeder Änderung an der Animation also:
+Alle Seiten liegen eine Ebene unter der Wurzel, die relativen Pfade sind
+deshalb überall dieselben.
+
+Die Animation steht **genau einmal** im Haus: in
+`ankuendigung/index.html` zwischen `<!-- teaser:start -->` und
+`<!-- teaser:end -->`. Die Seiten `/teaser/` und `/praesentation/` tragen
+dieselben Marken und bekommen den Abschnitt eingesetzt. Nach jeder
+Änderung an der Animation also:
 
 ```sh
 python3 tools/embed-teaser.py
@@ -110,7 +117,7 @@ ffmpeg -y -sseof -0.15 -i backup/carus-one-teaser-1080p.mp4 \
 
 ## Beim Umzug auf eine andere Adresse anpassen
 
-* `og:url` und `og:image` in `index.html` (absolute Adressen, weil die
+* `og:url` und `og:image` in `ankuendigung/index.html` (absolute Adressen, weil die
   meisten Dienste relative Vorschaubilder nicht auswerten)
 * `<meta name="robots" content="noindex, nofollow">` entfernen, wenn eine
   Seite gefunden werden soll
@@ -120,6 +127,10 @@ ffmpeg -y -sseof -0.15 -i backup/carus-one-teaser-1080p.mp4 \
   nicht enthalten
 
 ## Geprüft
+
+**Übersicht:** axe-core ohne Verstöße bei 1440 und 390 Pixel, kein
+Überlauf bei 1440 / 768 / 390 / 320 Pixel, alle vier Verweise führen zu
+ihrer Seite, kommt ohne JavaScript aus.
 
 **Ankündigungsseite:** axe-core ohne Verstöße bei 1280 und 390 Pixel,
 Kontraste über den Anforderungen von WCAG 2.2 AA, keine waagerechten

@@ -635,6 +635,19 @@ main {
   max-width: 34em;
 }
 
+/* Zurueck zur Uebersicht - der Weg, auf dem man hergekommen ist. */
+.v-foot__back {
+  margin: 0.6rem 0 0;
+}
+
+.v-foot__back a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 0.7rem 0;
+  color: var(--v-body);
+  font-size: 0.9rem;
+}
+
 .v-foot a {
   display: inline-block;
   min-height: 44px;

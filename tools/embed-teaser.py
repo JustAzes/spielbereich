@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
-"""Setzt die Einstiegsanimation aus index.html in die abgeleiteten Seiten.
+"""Setzt die Einstiegsanimation der Ankuendigungsseite in die anderen ein.
 
     python3 tools/embed-teaser.py
 
-Die Animation steht genau einmal im Haus: in index.html zwischen
-<!-- teaser:start --> und <!-- teaser:end -->. Die Seiten teaser/ und
-praesentation/ tragen dieselben Marken und bekommen den Abschnitt von
-hier eingesetzt - so laufen sie nicht auseinander. (backup/ nicht: dort
-liegt der Film, gerade weil die Animation nicht laufen kann.)
+Die Animation steht genau einmal im Haus: in ankuendigung/index.html
+zwischen <!-- teaser:start --> und <!-- teaser:end -->. Die Seiten
+teaser/ und praesentation/ tragen dieselben Marken und bekommen den
+Abschnitt von hier eingesetzt - so laufen sie nicht auseinander.
+(backup/ nicht: dort liegt der Film, gerade weil die Animation nicht
+laufen kann.)
 
-Beim Einsetzen wird angepasst, was sich zwischen Einstieg und Vortrag
-unterscheidet:
+Alle Seiten liegen eine Ebene unter der Wurzel, die relativen Pfade
+passen deshalb unveraendert. Angepasst wird nur, was sich zwischen
+Einstieg und Vortrag unterscheidet:
 
   * data-c1-present statt id="top" - nur damit legt teaser.js seine
     Steuerung an (Kapitel, Springen), siehe js/present.js
   * der Knopf "Die Vision entdecken" faellt weg, es liegt kein Inhalt
     darunter
-  * relative Pfade gehen eine Ebene hoeher (../img/)
 """
 
 import os
@@ -25,7 +26,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-SOURCE = os.path.join(ROOT, 'index.html')
+SOURCE = os.path.join(ROOT, 'ankuendigung', 'index.html')
 TARGETS = ['teaser/index.html', 'praesentation/index.html']
 
 START = '<!-- teaser:start'
@@ -61,10 +62,9 @@ def for_presentation(sec):
         '<section class="c1" data-c1 id="top" aria-label="Einstiegsanimation von carus.one">',
         '<section class="c1" data-c1 data-c1-present aria-label="carus.one – Sequenz">')
     sec = re.sub(r'\n *<a class="c1-enter"[^\n]*\n', '\n', sec)
-    sec = sec.replace('src="img/carus-xray-thorax.png"', 'src="../img/carus-xray-thorax.png"')
     if 'data-c1-present' not in sec or 'c1-enter' in sec:
-        sys.exit('index.html: der Teaser sieht anders aus als erwartet, '
-                 'bitte tools/embed-teaser.py nachziehen')
+        sys.exit('ankuendigung/index.html: der Teaser sieht anders aus als '
+                 'erwartet, bitte tools/embed-teaser.py nachziehen')
     return sec
 
 
