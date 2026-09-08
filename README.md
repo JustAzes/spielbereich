@@ -158,7 +158,11 @@ Herunterladen angestossen, axe-core ohne Verstöße, kein Überlauf bei 1440
 und 390 Pixel, kommt ohne JavaScript aus.
 
 **Der Film:** 1920 × 1080, H.264 (High), 20 Bilder je Sekunde, genau 800
-Bilder, 40,00 Sekunden, ohne Ton, etwa 33 MB. Vollständig dekodiert ohne
+Bilder, 40,00 Sekunden, ohne Ton, etwa 33 MB. In seiner Fusszeile steht
+noch „powered by DIZ" – die Seiten tragen es nicht mehr, und der Film
+wurde dafür nicht neu abgenommen (das dauert rund 17 Minuten). Wer es
+gleich haben will: `node tools/record-teaser.js` erzeugt ihn neu, danach
+das Standbild wie unten beschrieben. Vollständig dekodiert ohne
 Fehler; das letzte Bild zeigt den Abschluss samt Fusszeile. Das Abspielen
 im Browser liess sich hier nicht prüfen – das Chromium dieser Umgebung
 bringt keinen H.264-Dekoder mit. In Chrome, Edge, Safari, Firefox,
