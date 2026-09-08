@@ -1,0 +1,534 @@
+/* Logo-Animation Brückner Haustechnik & Ausbau (Entwurfsseite /index3/).
+ *
+ * Der Ruhezustand entspricht genau der Logovorlage: flache Flächen auf
+ * Schwarz, kein Leuchten. Alles Leuchtende gehört zur Animation und ist
+ * danach wieder weg.
+ *
+ * Ablauf, gesteuert über die Zeitmarken unten:
+ *   1. Der Tropfen fällt von oben ein und schlägt auf.
+ *   2. Die beiden Seitenwände fahren von links und rechts herein.
+ *   3. Das Dach setzt sich von oben darauf.
+ *   4. Der Schriftzug klart auf.
+ */
+
+:root {
+  /* Hintergrund exakt wie in der Vorlage gemessen. */
+  --bk-ink: #070108;
+
+  /* Zeitmarken der Animation (Startzeitpunkte). */
+  --bk-fall-at: 0.25s;
+  --bk-fall-dur: 0.95s;
+  --bk-hit-at: 1.2s;
+  --bk-wall-at: 1.72s;
+  --bk-roof-at: 2.32s;
+  --bk-name-at: 3.3s;
+  --bk-sub-at: 3.56s;
+
+  /* Weg, den die Teile beim Einfliegen zurücklegen (SVG-Einheiten). */
+  --bk-fall-from: -480px;
+  --bk-roof-from: -320px;
+  --bk-wall-from: 250px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--bk-ink);
+  /* Kaum wahrnehmbare Aufhellung hinter dem Logo. Die Vorlage ist flaches
+     Schwarz, deshalb bleibt es sehr zurückhaltend. */
+  background-image: radial-gradient(58% 48% at 50% 45%, #0b0812 0%, #08040c 52%, var(--bk-ink) 100%);
+  color: #e9e3d2;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.bk-stage {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+}
+
+/* --- Das Logo ------------------------------------------------------- */
+
+.bk-logo {
+  display: block;
+  width: min(86vmin, 92vw, 620px);
+  height: auto;
+  /* Die einfliegenden Teile starten außerhalb des Rahmens. */
+  overflow: visible;
+}
+
+.bk-roof__line {
+  fill: none;
+  stroke: url(#bkGold);
+  stroke-width: 20;
+  stroke-linejoin: round;
+  stroke-linecap: butt;
+}
+
+.bk-wall rect {
+  fill: url(#bkWallG);
+}
+
+.bk-rings path,
+.bk-drop path {
+  fill: #2f8cca;
+}
+
+.bk-name path,
+.bk-sub path {
+  fill: url(#bkTextG);
+}
+
+.bk-impact__ring {
+  fill: none;
+  stroke: #6fbdea;
+  stroke-width: 2.2;
+}
+
+.bk-splash__d {
+  fill: #6fbdea;
+}
+
+/* --- Ausgangszustand: alles noch nicht da --------------------------- */
+
+.bk-drop,
+.bk-rings,
+.bk-wall,
+.bk-roof,
+.bk-name,
+.bk-sub {
+  will-change: transform, opacity;
+}
+
+.bk-drop {
+  transform: translateY(var(--bk-fall-from));
+  opacity: 0;
+}
+
+.bk-rings,
+.bk-name,
+.bk-sub {
+  opacity: 0;
+}
+
+.bk-wall--l {
+  transform: translateX(calc(var(--bk-wall-from) * -1));
+  opacity: 0;
+}
+
+.bk-wall--r {
+  transform: translateX(var(--bk-wall-from));
+  opacity: 0;
+}
+
+.bk-roof {
+  transform: translateY(var(--bk-roof-from));
+  opacity: 0;
+}
+
+.bk-trail,
+.bk-flash,
+.bk-impact,
+.bk-splash {
+  opacity: 0;
+}
+
+/* --- Der Ablauf ----------------------------------------------------- */
+
+.bk-stage.is-playing .bk-drop {
+  animation: bk-fall var(--bk-fall-dur) cubic-bezier(0.45, 0, 0.85, 0.42) var(--bk-fall-at) both;
+}
+
+.bk-stage.is-playing .bk-drop__body {
+  /* Aufprall: kurz stauchen und wieder aufrichten. */
+  animation: bk-squash 0.42s cubic-bezier(0.3, 1.6, 0.4, 1) var(--bk-hit-at) both;
+  transform-box: fill-box;
+  transform-origin: 50% 96%;
+}
+
+.bk-stage.is-playing .bk-trail {
+  animation: bk-trail calc(var(--bk-fall-dur) + 0.18s) ease-out var(--bk-fall-at) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.bk-stage.is-playing .bk-flash {
+  animation: bk-flash 0.6s ease-out var(--bk-hit-at) both;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.bk-stage.is-playing .bk-impact {
+  opacity: 1;
+}
+
+.bk-stage.is-playing .bk-impact__ring {
+  animation: bk-ring 1.15s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: calc(var(--bk-hit-at) + var(--i) * 0.16s);
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.bk-stage.is-playing .bk-splash {
+  opacity: 1;
+}
+
+.bk-stage.is-playing .bk-splash__d {
+  animation: bk-splash 0.72s cubic-bezier(0.3, 0.5, 0.6, 1) both;
+  animation-delay: calc(var(--bk-hit-at) + var(--i) * 0.012s);
+}
+
+.bk-stage.is-playing .bk-rings {
+  animation: bk-rings 0.75s ease-out calc(var(--bk-hit-at) + 0.16s) both;
+  transform-box: fill-box;
+  transform-origin: 50% 40%;
+}
+
+.bk-stage.is-playing .bk-wall--l {
+  animation: bk-wall-l 0.66s cubic-bezier(0.16, 1, 0.3, 1) var(--bk-wall-at) both;
+}
+
+.bk-stage.is-playing .bk-wall--r {
+  animation: bk-wall-r 0.66s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--bk-wall-at) + 0.06s) both;
+}
+
+.bk-stage.is-playing .bk-roof {
+  animation: bk-roof 0.82s cubic-bezier(0.3, 0.9, 0.25, 1) var(--bk-roof-at) both;
+}
+
+.bk-stage.is-playing .bk-name {
+  animation: bk-text 0.72s cubic-bezier(0.16, 1, 0.3, 1) var(--bk-name-at) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.bk-stage.is-playing .bk-sub {
+  animation: bk-text 0.72s cubic-bezier(0.16, 1, 0.3, 1) var(--bk-sub-at) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* --- Keyframes ------------------------------------------------------ */
+
+@keyframes bk-fall {
+  0% {
+    transform: translateY(var(--bk-fall-from));
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bk-squash {
+  0% {
+    transform: scale(1.12, 0.84);
+  }
+
+  46% {
+    transform: scale(0.94, 1.07);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes bk-trail {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  74% {
+    opacity: 0.85;
+    transform: scaleY(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0.05);
+  }
+}
+
+@keyframes bk-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scale(0.75);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes bk-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.22);
+  }
+
+  12% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+@keyframes bk-splash {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  16% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.4), calc(var(--dy) * 0.75)) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), 14px) scale(0.35);
+  }
+}
+
+@keyframes bk-rings {
+  0% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bk-wall-l {
+  0% {
+    transform: translateX(calc(var(--bk-wall-from) * -1));
+    opacity: 0;
+  }
+
+  22% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bk-wall-r {
+  0% {
+    transform: translateX(var(--bk-wall-from));
+    opacity: 0;
+  }
+
+  22% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bk-roof {
+  0% {
+    transform: translateY(var(--bk-roof-from));
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  /* Kurz durchfedern, dann sitzt es. */
+  76% {
+    transform: translateY(9px);
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bk-text {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.965);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Nach dem Aufbau: das Wasser bleibt in leichter Bewegung -------- */
+
+.bk-stage.is-done .bk-rings {
+  animation: bk-breathe 7s ease-in-out 0.4s infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 40%;
+}
+
+.bk-stage.is-done .bk-drop {
+  animation: bk-bob 7s ease-in-out 0.4s infinite;
+}
+
+@keyframes bk-breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.035); opacity: 0.88; }
+}
+
+@keyframes bk-bob {
+  /* opacity muss hier stehen: diese Animation ersetzt bk-fall, sonst greift
+     wieder der Startwert 0 aus der Grundregel und der Tropfen verschwindet. */
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+/* --- Bedienung ------------------------------------------------------ */
+
+.bk-replay {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #d8cfb4;
+  border: 1px solid rgba(233, 227, 210, 0.22);
+  border-radius: 50%;
+  background-color: rgba(233, 227, 210, 0.06);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.bk-replay:hover,
+.bk-replay:focus {
+  color: #fff;
+  background-color: rgba(233, 227, 210, 0.16);
+}
+
+.bk-replay:focus-visible {
+  outline: 2px solid #cbb26a;
+  outline-offset: 3px;
+}
+
+.bk-note {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(233, 227, 210, 0.3);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Rücksicht auf Systemeinstellungen ------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kein Aufbau, kein Nachleben: das Logo steht sofort fertig da. */
+  .bk-drop,
+  .bk-wall--l,
+  .bk-wall--r,
+  .bk-roof {
+    transform: none;
+    opacity: 1;
+  }
+
+  .bk-rings,
+  .bk-name,
+  .bk-sub {
+    opacity: 1;
+  }
+
+  .bk-stage.is-playing .bk-drop,
+  .bk-stage.is-playing .bk-drop__body,
+  .bk-stage.is-playing .bk-trail,
+  .bk-stage.is-playing .bk-flash,
+  .bk-stage.is-playing .bk-impact__ring,
+  .bk-stage.is-playing .bk-splash__d,
+  .bk-stage.is-playing .bk-rings,
+  .bk-stage.is-playing .bk-wall--l,
+  .bk-stage.is-playing .bk-wall--r,
+  .bk-stage.is-playing .bk-roof,
+  .bk-stage.is-playing .bk-name,
+  .bk-stage.is-playing .bk-sub,
+  .bk-stage.is-done .bk-rings,
+  .bk-stage.is-done .bk-drop {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .bk-trail,
+  .bk-flash,
+  .bk-impact,
+  .bk-splash {
+    display: none;
+  }
+
+  .bk-replay {
+    display: none;
+  }
+}
