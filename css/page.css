@@ -534,32 +534,32 @@ main {
 
 .motif {
   display: block;
-  width: min(24rem, 100%);
+  width: min(26rem, 100%);
   height: auto;
   margin: clamp(2.5rem, 5vw, 4rem) 0 0;
 }
 
-.motif__lines path {
+/* Die Spuren: sehr fein, damit sie nicht als Diagrammlinien lesen. */
+.motif__trails path {
+  /* Der Verlauf laesst die Spur am Anfang aufscheinen und in der Wolke
+     verschwinden - so wirkt sie nicht wie eine Diagrammlinie. */
   fill: none;
-  stroke: rgba(138, 180, 232, 0.4);
+  stroke: url(#motifFade);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
-.motif__dots line {
+/* Die drei Ergebnisse am Anfang der Spuren. */
+.motif__seeds line {
   stroke: #dbe7f8;
-  stroke-width: 4.5;
+  stroke-width: 4;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
 
-.motif__hub {
-  stroke-width: 8 !important;
-}
-
-.motif__far {
-  stroke: #93a3b8 !important;
-  stroke-width: 3 !important;
+/* Die Wolke: dieselbe Anmutung wie die Partikel im Einstieg. */
+.motif__cloud circle {
+  fill: #cfdcef;
 }
 
 .close {

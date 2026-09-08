@@ -946,7 +946,8 @@
       el: el, kind: kind, idx: idx, x: ax, y: ay, z: az, r: ar,
       align: el.getAttribute('data-c1-align') || 'center',
       panel: ari !== null,
-      flip: false, from: from, to: to, fade: fade, shown: false
+      flip: false, from: from, to: to, fade: fade, shown: false,
+      lastTr: '', lastOp: ''
     });
   });
 
@@ -1157,6 +1158,7 @@
           L.el.style.willChange = '';
           L.el.classList.remove('is-on');
           L.shown = false;
+          L.lastTr = ''; L.lastOp = '';
         }
         continue;
       }
@@ -1185,6 +1187,7 @@
           L.el.style.willChange = '';
           L.el.classList.remove('is-on');
           L.shown = false;
+          L.lastTr = ''; L.lastOp = '';
         }
         continue;
       }
@@ -1202,20 +1205,32 @@
         L.el.style.willChange = 'transform, opacity';
         L.el.classList.add('is-on');
         L.shown = true;
+        /* "right" setzt den Text neben den Punkt, damit die dünne Linie
+           davor vom Punkt weg läuft und die Schrift ihn nicht verdeckt.
+           Am rechten Rand klappt er nach links, damit nichts abgeschnitten
+           wird (siehe is-flip). Die Seite wird einmal beim Erscheinen
+           festgelegt und bis zum Ausblenden gehalten: sonst springt die
+           Beschriftung mitten im Bild um ihre eigene Breite, sobald die
+           Kamera den Punkt über die Schwelle trägt. */
+        if (L.align === 'right') {
+          L.flip = scr[0] > view.cssW * 0.58;
+          L.el.classList.toggle('is-flip', L.flip);
+        }
       }
-      L.el.style.opacity = op.toFixed(3);
-      /* "right" setzt den Text neben den Punkt, damit die dünne Linie
-         davor vom Punkt weg läuft und die Schrift ihn nicht verdeckt. */
-      var off = 'translate(-50%,-50%)';
-      if (L.align === 'right') {
-        /* Am rechten Rand nach links klappen, damit nichts abgeschnitten
-           wird; die dünne Linie wechselt dazu die Seite (siehe is-flip). */
-        var flip = scr[0] > view.cssW * 0.58;
-        if (flip !== L.flip) { L.el.classList.toggle('is-flip', flip); L.flip = flip; }
-        off = flip ? 'translate(-100%,-50%) translateX(-18px)' : 'translate(18px,-50%)';
-      }
-      L.el.style.transform = 'translate3d(' + Math.round(scr[0]) + 'px,' +
-        Math.round(scr[1]) + 'px,0) ' + off + ' scale(' + sc.toFixed(3) + ')';
+      /* Nur schreiben, was sich geändert hat: jede Zuweisung kostet einen
+         Stilabgleich. */
+      var ops = op.toFixed(2);
+      if (ops !== L.lastOp) { L.el.style.opacity = ops; L.lastOp = ops; }
+      var off = L.align === 'right'
+        ? (L.flip ? 'translate(-100%,-50%) translateX(-18px)' : 'translate(18px,-50%)')
+        : 'translate(-50%,-50%)';
+      /* Position mit Nachkommastellen: auf ganze Pixel gerundet springt die
+         Schrift bei langsamer Bewegung in Stufen, das liest sich als
+         Zittern. Die Größe wird in Zweiprozentschritten gerastert, damit
+         der Text nicht in jedem Bild neu gerastert wird. */
+      var tr = 'translate3d(' + scr[0].toFixed(2) + 'px,' + scr[1].toFixed(2) +
+        'px,0) ' + off + ' scale(' + (Math.round(sc * 50) / 50).toFixed(2) + ')';
+      if (tr !== L.lastTr) { L.el.style.transform = tr; L.lastTr = tr; }
     }
   }
 
