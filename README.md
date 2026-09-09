@@ -39,6 +39,7 @@ teaser/index.html           die Sequenz allein, für den Beamer
 praesentation/index.html    Folien, die Sequenz als Auftakt
 backup/index.html           Seite um den Film
 backup/*.mp4                der Film selbst
+archiv/                     aeltere Fassungen, von keiner Seite verlinkt
 css/start.css               die Übersicht
 css/teaser.css              die Sequenz
 css/page.css                Gestaltungssystem der Ankündigungsseite
@@ -96,6 +97,14 @@ pip install numpy pillow
 python3 tools/carus-xray.py
 python3 tools/carus-brand.py
 ```
+
+### Was im Archiv liegt
+
+`archiv/carus-one-teaser-1080p-mit-diz.mp4` ist derselbe Film, nur mit
+„powered by DIZ" in der Fusszeile. Er liegt hier, damit die Fassung nicht
+verloren geht; keine Seite verlinkt ihn. Weil GitHub Pages alles
+ausliefert, was im Zweig liegt, ist er über seine Adresse trotzdem
+erreichbar – er wird nur nirgends gezeigt.
 
 ### Film neu abnehmen
 
@@ -158,12 +167,12 @@ Herunterladen angestossen, axe-core ohne Verstöße, kein Überlauf bei 1440
 und 390 Pixel, kommt ohne JavaScript aus.
 
 **Der Film:** 1920 × 1080, H.264 (High), 20 Bilder je Sekunde, genau 800
-Bilder, 40,00 Sekunden, ohne Ton, etwa 33 MB. In seiner Fusszeile steht
-noch „powered by DIZ" – die Seiten tragen es nicht mehr, und der Film
-wurde dafür nicht neu abgenommen (das dauert rund 17 Minuten). Wer es
-gleich haben will: `node tools/record-teaser.js` erzeugt ihn neu, danach
-das Standbild wie unten beschrieben. Vollständig dekodiert ohne
-Fehler; das letzte Bild zeigt den Abschluss samt Fusszeile. Das Abspielen
-im Browser liess sich hier nicht prüfen – das Chromium dieser Umgebung
-bringt keinen H.264-Dekoder mit. In Chrome, Edge, Safari, Firefox,
-PowerPoint und Keynote ist H.264 der übliche Weg.
+Bilder, 40,00 Sekunden, ohne Ton, etwa 33 MB. Vollständig dekodiert ohne
+Fehler; seine Fusszeile nennt nur das Universitätsklinikum Dresden, das
+letzte Bild zeigt den vollständigen Abschluss. Gegen die Fassung im
+Archiv gemessen (die mit „powered by DIZ") unterscheiden sich die
+Einzelbilder im Mittel um 0,2 bis 1,8 von 255 – das ist die Streuung des
+Renderers, die Sequenz ist dieselbe. Das Abspielen im Browser liess sich
+hier nicht prüfen: das Chromium dieser Umgebung bringt keinen
+H.264-Dekoder mit. In Chrome, Edge, Safari, Firefox, PowerPoint und
+Keynote ist H.264 der übliche Weg.
